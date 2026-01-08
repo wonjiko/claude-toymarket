@@ -1,0 +1,8 @@
+{
+  "name": "matryoshka-plugin",
+  "description": "플러그인 컴포넌트를 만드는 플러그인 - command, agent, skill 생성기",
+  "version": "0.1.0",
+  "author": {
+    "name": "wonjiko"
+  }
+}

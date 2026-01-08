@@ -17,6 +17,12 @@
       "description": "Planning → Execution → Retrospective 세션 기반 개발 워크플로우",
       "source": "./plugins/typical-process",
       "category": "workflow"
+    },
+    {
+      "name": "matryoshka-plugin",
+      "description": "플러그인 컴포넌트를 만드는 플러그인 - command, agent, skill 생성기",
+      "source": "./plugins/matryoshka-plugin",
+      "category": "development"
     }
   ]
 }
