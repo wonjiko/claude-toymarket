@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-toymarket",
+  "description": "개인용 Claude Code 플러그인 장터",
+  "owner": {
+    "name": "wonjiko"
+  },
+  "plugins": [
+    {
+      "name": "dice",
+      "description": "결정장애를 위한 주사위",
+      "source": "./plugins/dice",
+      "category": "utility"
+    },
+    {
+      "name": "typical-process",
+      "description": "Planning → Execution → Retrospective 세션 기반 개발 워크플로우",
+      "source": "./plugins/typical-process",
+      "category": "workflow"
+    }
+  ]
+}
