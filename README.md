@@ -21,6 +21,36 @@ claude-toymarket/
 └── CLAUDE.md         # Claude용 컨텍스트
 ```
 
+## 사용법
+
+### 마켓플레이스 등록
+```bash
+# 로컬에서
+claude plugin marketplace add /path/to/claude-toymarket
+
+# 또는 GitHub에서
+claude plugin marketplace add wonjiko/claude-toymarket
+```
+
+### 플러그인 설치
+```bash
+# 목록 확인
+claude plugin search claude-toymarket
+
+# 설치
+claude plugin install claude-toymarket@dice
+claude plugin install claude-toymarket@typical-process
+```
+
+### 플러그인 사용
+```bash
+# dice - 주사위 굴리기
+/dice 점심 메뉴: 짜장면, 짬뽕, 볶음밥
+
+# typical-process - 세션 시작
+/typical-process:start add-feature
+```
+
 ## 플러그인 추가하기
 
 1. `plugins/` 아래에 폴더 생성
