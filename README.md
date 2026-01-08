@@ -38,8 +38,8 @@ claude plugin marketplace add wonjiko/claude-toymarket
 claude plugin search claude-toymarket
 
 # 설치
-claude plugin install claude-toymarket@dice
-claude plugin install claude-toymarket@typical-process
+claude plugin install dice@claude-toymarket
+claude plugin install typical-process@claude-toymarket
 ```
 
 ### 플러그인 사용
