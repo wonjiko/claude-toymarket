@@ -1,0 +1,10 @@
+{
+  "name": "plugin-name",
+  "description": "한 줄 설명",
+  "version": "0.0.1",
+  "author": "pulp",
+  "why": "왜 만들었는지",
+  "when_not_to_use": "언제 쓰면 안 되는지",
+  "files": [],
+  "tags": []
+}

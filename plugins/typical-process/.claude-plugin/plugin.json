@@ -1,0 +1,11 @@
+{
+  "name": "typical-process",
+  "version": "1.0.0",
+  "description": "Planning → Execution → Retrospective 세션 기반 개발 워크플로우",
+  "author": {
+    "name": "pulp"
+  },
+  "license": "MIT",
+  "keywords": ["workflow", "session", "planning", "retrospective", "process"],
+  "hooks": "./hooks/hooks.json"
+}
