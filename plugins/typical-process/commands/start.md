@@ -17,26 +17,30 @@ argument-hint: <session_name>
    mkdir -p .claude/session/archive
    ```
 
-3. Analyze the codebase relevant to this task
+3. Ask the user: "이 세션에서 무슨 작업을 하려고 해?"
+   - Wait for user's response before proceeding
+   - Do NOT analyze codebase or assume tasks on your own
 
-4. Create `.claude/session/$ARGUMENTS-plan.md` with:
+4. Based on user's answer, analyze relevant parts of the codebase
+
+5. Create `.claude/session/$ARGUMENTS-plan.md` with:
    - Clear objective statement
    - Current state analysis
    - Broken-down tasks
    - Files to be modified
    - Risks and dependencies
 
-5. Create `.claude/session/$ARGUMENTS-context.md` with initial state:
+6. Create `.claude/session/$ARGUMENTS-context.md` with initial state:
    - Phase: planning
    - Started: current timestamp
    - Progress: 0/N tasks
 
-6. Set active session:
+7. Set active session:
    ```
    echo "$ARGUMENTS" > .claude/session/active
    ```
 
-7. Present plan summary and ask for approval
+8. Present plan summary and ask for approval
 
 Do NOT begin implementation until user approves the plan.
 
