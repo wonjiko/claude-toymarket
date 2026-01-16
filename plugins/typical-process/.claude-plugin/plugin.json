@@ -6,6 +6,5 @@
     "name": "pulp"
   },
   "license": "MIT",
-  "keywords": ["workflow", "session", "planning", "retrospective", "process"],
-  "hooks": "./hooks/hooks.json"
+  "keywords": ["workflow", "session", "planning", "retrospective", "process"]
 }
