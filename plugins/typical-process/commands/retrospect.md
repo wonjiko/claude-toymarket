@@ -1,20 +1,17 @@
 ---
 description: 세션 워크플로우 회고 - Planning/Execution 단계 리뷰 및 분석
-allowed-tools: Read, Write, Edit, Bash(git:*), Bash(mv:*), Bash(mkdir:*)
+allowed-tools: Read, Write, Edit, Bash(git:*), Bash(mv:*), Bash(mkdir:*), Bash(rm:*), Glob, AskUserQuestion
 ---
 
 # Retrospective Phase
 
-## Active Session
+## Task
 
-Active session: !`cat .claude/session/active 2>/dev/null || echo "(none)"`
-
-## Context
-
-!`SESSION=$(cat .claude/session/active 2>/dev/null); if [ -n "$SESSION" ]; then echo "=== Plan ==="; cat ".claude/session/$SESSION-plan.md" 2>/dev/null; echo ""; echo "=== Context ==="; cat ".claude/session/$SESSION-context.md" 2>/dev/null; fi`
-
-Git changes: !`git log --oneline -20 2>/dev/null`
-Files changed: !`git diff --stat HEAD~5 2>/dev/null || echo "No recent commits"`
+1. Read `.claude/session/active` to get active session name
+2. If no active session, display "(no active session)" and exit
+3. Read `.claude/session/[session]-plan.md` and `.claude/session/[session]-context.md`
+4. Use Bash to get git history: `git log --oneline -20` and `git diff --stat HEAD~5`
+5. Follow the instructions below
 
 ## Instructions
 

@@ -5,11 +5,12 @@ description: 세션 회고 - Claude와의 작업을 분석하고 효율적인 �
 
 # 세션 회고 (Retrospect)
 
-## Git 커밋 내역
+## Task
 
-!`if git rev-parse --git-dir > /dev/null 2>&1; then git log --oneline -10 --pretty=format:'- %h %s (%ar)'; else echo "(git 저장소가 아님)"; fi`
+1. Use Bash to get recent git commits: `git log --oneline -10 --pretty=format:'- %h %s (%ar)'`
+2. Generate retrospective based on the template below
 
-## 작업
+## Retrospective Template
 
 위 커밋 내역(있는 경우)과 지금까지의 대화를 돌아보고 다음 형식으로 회고를 작성해:
 
