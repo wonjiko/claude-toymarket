@@ -1,0 +1,8 @@
+{
+  "name": "mcp-manager",
+  "description": "MCP 서버 자동 연결 및 헬스체크. 세션 시작 시 MCP 상태 확인 후 문제 발견 시 자동 수정 시도.",
+  "version": "0.1.0",
+  "author": {
+    "name": "pulp"
+  }
+}

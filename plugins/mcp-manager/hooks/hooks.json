@@ -1,0 +1,17 @@
+{
+  "description": "MCP 서버 상태 자동 체크 및 수정",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/check-mcp.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
