@@ -1,3 +1,8 @@
+---
+description: 결정장애를 위한 주사위
+argument-hint: [max | option1 option2 ...]
+---
+
 # /dice
 
 결정을 도와주는 주사위.
