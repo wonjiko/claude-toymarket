@@ -12,6 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 command-toybox/
 ├── .claude-plugin/plugin.json   # 플러그인 메타데이터
 ├── commands/                    # slash command 정의
+│   ├── code-review.md          # /code-review - 로컬 코드 품질 검증
 │   ├── commit.md               # /commit - Conventional Commit 형식 커밋
 │   └── retrospect.md           # /retrospect - 세션 회고
 └── skills/                      # AI 기반 skill
