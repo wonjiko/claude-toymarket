@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebSearch",
+      "WebFetch(domain:developers.figma.com)",
+      "Bash(/Users/pulp/Repositories/claude-toymarket/plugins/mcp-manager/hooks/check-mcp.sh)",
+      "Bash(claude mcp list:*)",
+      "Bash(claude mcp add:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.slack.dev)",
+      "Bash(claude mcp remove:*)",
+      "Bash(./scripts/lint-all.sh:*)",
+      "Bash(./scripts/lint-command.sh:*)",
+      "Bash(./scripts/lint-skill.sh:*)"
+    ]
+  }
+}
