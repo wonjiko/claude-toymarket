@@ -1,0 +1,10 @@
+{
+  "name": "command-toybox",
+  "version": "1.0.0",
+  "description": "자주 쓰는 slash command 모음집",
+  "author": {
+    "name": "pulp"
+  },
+  "license": "MIT",
+  "keywords": ["commands", "utility", "productivity"]
+}

@@ -1,44 +1,41 @@
 ---
 description: 현재 프로젝트의 세션 목록 조회 및 전환
-allowed-tools: Bash(ls:*), Bash(cat:*), Bash(grep:*), Bash(mv:*), Bash(mkdir:*), Read, Write
+allowed-tools: Bash(ls:*), Bash(cat:*), Bash(grep:*), Bash(mv:*), Bash(mkdir:*), Read, Glob
 argument-hint: [session_name to switch]
 ---
 
 # Session List
 
-## Active Sessions
+## Task
 
-Current: !`cat .claude/session/active 2>/dev/null || echo "(none)"`
+1. Check if `.claude/session/` directory exists
+2. Read `.claude/session/active` to get current active session (if exists)
+3. Use Glob to find all `*-plan.md` files in `.claude/session/`
+4. For each plan file found, read its corresponding `*-context.md` to extract Phase and Progress
+5. Check `.claude/session/archive/` for archived sessions
 
-!`for f in .claude/session/*-plan.md; do
-  if [ -f "$f" ]; then
-    name=$(basename "$f" -plan.md)
-    context=".claude/session/$name-context.md"
-    if [ -f "$context" ]; then
-      phase=$(grep -m1 "Phase:" "$context" 2>/dev/null | sed 's/.*Phase: //')
-      progress=$(grep -m1 "Progress:" "$context" 2>/dev/null | sed 's/.*Progress: //')
-      echo "---"
-      echo "Session: $name"
-      echo "Phase: $phase"
-      echo "Progress: $progress"
-    fi
-  fi
-done 2>/dev/null`
+## Output Format
 
-## Archived Sessions
+Display results like:
+```
+Current: [active session name or "(none)"]
 
-!`if [ -d .claude/session/archive ]; then
-  count=$(ls .claude/session/archive/*-plan.md 2>/dev/null | wc -l | tr -d ' ')
-  echo "($count archived sessions)"
-  for f in .claude/session/archive/*-plan.md; do
-    if [ -f "$f" ]; then
-      name=$(basename "$f" -plan.md)
-      echo "  - $name"
-    fi
-  done 2>/dev/null
-else
-  echo "(no archived sessions)"
-fi`
+Active Sessions:
+---
+Session: [name]
+Phase: [phase]
+Progress: [progress]
+---
+
+Archived: [count] sessions
+  - [name1]
+  - [name2]
+```
+
+If no `.claude/session/` directory exists, output:
+```
+(no sessions yet - run /typical-process:start to create one)
+```
 
 ## Instructions
 
