@@ -1,3 +1,8 @@
+---
+allowed-tools: Bash(git diff:*), Bash(yarn lint:*), Bash(yarn typecheck:*), Bash(yarn build:*), Read
+description: 로컬 코드 품질 검증 - git push 전 lint, typecheck, 코드 리뷰 실행
+---
+
 # /code-review - 로컬 코드 품질 검증
 
 git push 전에 변경된 코드의 품질을 검증합니다.

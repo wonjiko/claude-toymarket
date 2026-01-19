@@ -19,6 +19,24 @@ plugins/
 .claude-plugin/marketplace.json     # 플러그인 카탈로그
 ```
 
+## 현재 플러그인
+
+| 플러그인 | 설명 | 주요 기능 |
+|----------|------|-----------|
+| command-toybox | 범용 유틸리티 명령어 모음 | /commit, /code-review, /retrospect |
+| typical-process | 세션 기반 워크플로우 관리 | /start, /execute, /retrospect, /sync, /sessions |
+| matryoshka-plugin | 플러그인/컴포넌트 생성 도구 | /create-command, skill-creator agent |
+| mcp-manager | MCP 서버 자동 관리 | 세션 시작 시 MCP 상태 체크 |
+| dice | 주사위 굴리기 | /dice |
+
+### 명령어 구분 참고
+
+- **command-toybox**: 단독으로 사용 가능한 범용 명령어. typical-process 세션 없이도 동작
+- **typical-process**: 세션(plan/context 파일) 기반 워크플로우. `/start`로 세션 시작 필요
+- `/retrospect`가 양쪽에 존재함:
+  - `command-toybox/retrospect`: 대화 기반 간단한 회고 (세션 불필요)
+  - `typical-process/retrospect`: 세션 파일 기반 상세 회고 (세션 필요)
+
 ## 개발
 
 ### 플러그인 생성
