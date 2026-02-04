@@ -1,18 +1,27 @@
 ---
-allowed-tools: Bash(git diff:*), Bash(yarn lint:*), Bash(yarn typecheck:*), Bash(yarn build:*), Read
-description: 로컬 코드 품질 검증 - git push 전 lint, typecheck, 코드 리뷰 실행
+name: Code Review
+description: This skill should be used when the user wants to "review code", "check code quality", "run code review", or needs local code quality verification before git push. Runs lint, typecheck, and code review on changed files.
+version: 0.1.0
 ---
 
-# /code-review - 로컬 코드 품질 검증
+# 로컬 코드 품질 검증
 
-git push 전에 변경된 코드의 품질을 검증합니다.
+git push 전에 변경된 코드의 품질을 검증한다.
 
-## 실행 단계
+## 프로세스
 
-1. **변경 파일 확인**: `git diff --name-only` 로 변경된 파일 목록 확인
-2. **ESLint 검사**: `yarn lint` 실행하여 린트 에러 확인
-3. **TypeScript 검사**: `yarn typecheck` 실행하여 타입 에러 확인
-4. **코드 리뷰**: 변경된 파일을 읽고 CLAUDE.md의 코드 리뷰 기준에 따라 분석
+### Step 1: 변경 파일 확인
+
+`git diff --name-only`로 변경된 파일 목록 확인
+
+### Step 2: 정적 분석
+
+1. `yarn lint` 실행하여 린트 에러 확인
+2. `yarn typecheck` 실행하여 타입 에러 확인
+
+### Step 3: 코드 리뷰
+
+변경된 파일을 읽고 아래 기준에 따라 분석
 
 ## 검토 기준
 
@@ -31,6 +40,7 @@ git push 전에 변경된 코드의 품질을 검증합니다.
 - locale 파일은 리뷰하지 않음
 
 ## Side-Effect 분석
+
 - 삭제된 코드 분석: 삭제된 로직이 어떤 역할을 했는지, 그 기능이 다른 곳에서 대체되었는지 확인
 - 기존 동작 보존 여부: 변경 전후로 동일한 입력에 대해 동일한 결과가 나오는지 검증
 - 엣지 케이스 시나리오: 정상 케이스뿐 아니라 취소, 실패, 빈 값 등 예외 상황에서의 동작 검토
@@ -63,4 +73,4 @@ git push 전에 변경된 코드의 품질을 검증합니다.
 
 ## 옵션
 
-빌드 검증이 필요하면 "/code-review 후 빌드도 검증해줘" 라고 요청하세요.
+빌드 검증이 필요하면 "빌드도 검증해줘"라고 요청하면 `yarn build`도 실행한다.
