@@ -1,18 +1,23 @@
 ---
-allowed-tools: Bash(git log:*)
-description: 세션 회고 - Claude와의 작업을 분석하고 효율적인 협업 방법 제안
+name: Retrospect
+description: This skill should be used when the user wants to "retrospect", "review session", "look back", or needs to analyze the current session and suggest more efficient collaboration methods.
+version: 0.1.0
 ---
 
 # 세션 회고 (Retrospect)
 
-## Task
+## 프로세스
 
-1. Use Bash to get recent git commits: `git log --oneline -10 --pretty=format:'- %h %s (%ar)'`
-2. Generate retrospective based on the template below
+### Step 1: 컨텍스트 수집
 
-## Retrospective Template
+1. `git log --oneline -10 --pretty=format:'- %h %s (%ar)'`로 최근 커밋 확인
+2. 지금까지의 대화 내용 분석
 
-위 커밋 내역(있는 경우)과 지금까지의 대화를 돌아보고 다음 형식으로 회고를 작성해:
+### Step 2: 회고 작성
+
+아래 템플릿에 따라 회고를 작성한다.
+
+## 회고 템플릿
 
 ### 1. 완료한 작업 요약
 - 이번 세션에서 완료한 주요 작업들
