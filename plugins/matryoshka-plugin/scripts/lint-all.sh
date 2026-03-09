@@ -22,14 +22,6 @@ else
 fi
 
 echo ""
-echo -e "${BOLD}=== Linting Commands ===${NC}"
-if [[ -d "$PLUGIN_DIR/commands" ]]; then
-  "$SCRIPT_DIR/lint-command.sh" "$PLUGIN_DIR/commands" || failed=$((failed + 1))
-else
-  echo "No commands/ directory"
-fi
-
-echo ""
 echo -e "${BOLD}=== Linting Skills ===${NC}"
 if [[ -d "$PLUGIN_DIR/skills" ]]; then
   "$SCRIPT_DIR/lint-skill.sh" "$PLUGIN_DIR/skills" || failed=$((failed + 1))
