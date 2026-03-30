@@ -1,5 +1,5 @@
 ---
-name: Make PR
+name: make-pr
 description: This skill should be used when the user wants to "make a pr", "create a pr", "create pull request", "open pr", or needs to generate a pull request with title and body from current branch changes.
 version: 0.1.0
 ---
