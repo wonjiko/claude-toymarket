@@ -1,5 +1,5 @@
 ---
-name: Reflection
+name: reflection
 description: This skill should be used when the user wants to "reflect on instructions", "analyze claude config", "review claude setup", or needs analysis and improvement suggestions for Claude Code instructions and configuration.
 version: 0.1.0
 ---

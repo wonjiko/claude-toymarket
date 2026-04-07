@@ -1,5 +1,5 @@
 ---
-name: Command Validator
+name: command-validator
 description: This skill should be used when the user wants to "validate a command", "review my command", "check command quality", "audit slash command", or needs evaluation of their Claude Code custom command against best practices.
 version: 0.1.0
 ---
