@@ -1,5 +1,5 @@
 ---
-name: Commit
+name: commit
 description: This skill should be used when the user wants to "commit", "make a commit", "save changes", "git commit", "커밋", "커밋 해줘", "변경사항 저장", or needs to create a git commit following Conventional Commit format. Also triggers when the user asks to commit after finishing implementation work (e.g., "done, commit this", "작업 끝났어 커밋해줘"). Automatically analyzes staged/unstaged changes and generates a one-line conventional commit message.
 version: 0.1.0
 ---

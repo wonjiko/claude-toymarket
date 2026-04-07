@@ -1,5 +1,5 @@
 ---
-name: Code Review
+name: code-review
 description: This skill should be used when the user wants to "review code", "check code quality", "run code review", or needs local code quality verification before git push. Runs lint, typecheck, and code review on changed files.
 version: 0.1.0
 ---

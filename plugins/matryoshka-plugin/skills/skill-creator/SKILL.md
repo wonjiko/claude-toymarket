@@ -1,5 +1,5 @@
 ---
-name: Skill Creator
+name: skill-creator
 description: This skill should be used when the user wants to "create a skill", "add a skill", "make a new skill", "create a command", "add a command", or needs guidance on skill structure for Claude Code plugins.
 version: 0.2.0
 ---

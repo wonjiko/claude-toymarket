@@ -1,5 +1,5 @@
 ---
-name: Retrospect
+name: retrospect
 description: This skill should be used when the user wants to "retrospect", "review session", "look back", or needs to analyze the current session and suggest more efficient collaboration methods.
 version: 0.1.0
 ---
