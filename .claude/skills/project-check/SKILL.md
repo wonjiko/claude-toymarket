@@ -26,8 +26,9 @@ CHECKLIST.md 기반으로 toymarket 저장소 정합성을 자동 검증한다.
 ### 3. 컴포넌트 유효성
 
 1. 모든 `plugins/*/skills/*/SKILL.md` — name, description, version frontmatter 존재 확인
-2. 모든 `plugins/*/agents/*.md` — name, description frontmatter 존재 확인
-3. 모든 `plugins/*/commands/*.md` — 파일 비어있지 않은지 확인
+2. 모든 skill의 name이 kebab-case인지 확인 (`^[a-z0-9]+(-[a-z0-9]+)*$`, 대문자/스페이스 불가)
+3. 모든 `plugins/*/agents/*.md` — name, description frontmatter 존재 확인
+4. 모든 `plugins/*/commands/*.md` — 파일 비어있지 않은지 확인
 
 ### 4. 린트
 

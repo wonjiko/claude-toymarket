@@ -14,6 +14,7 @@
 ## 3. 컴포넌트 유효성
 
 - [ ] 모든 `skills/*/SKILL.md` — name, description, version frontmatter 존재
+- [ ] 모든 `skills/*/SKILL.md` — name이 kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`)
 - [ ] 모든 `agents/*.md` — name, description frontmatter 존재
 - [ ] 모든 `commands/*.md` — 파일 비어있지 않음
 
