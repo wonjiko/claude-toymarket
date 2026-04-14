@@ -2,6 +2,10 @@
 
 MCP 서버 자동 연결 및 헬스체크 플러그인.
 
+## 왜 존재하는지
+
+세션 시작할 때마다 MCP 서버가 빠져있는지 수동으로 확인하기 번거롭다. 이 플러그인이 세션 시작 시 자동으로 MCP 상태를 체크하고 누락된 서버를 등록한다.
+
 ## 동작 방식
 
 세션 시작 시 `check-mcp.sh` 훅이 실행되어 MCP 상태를 확인한다.
@@ -18,10 +22,12 @@ MCP 서버 자동 연결 및 헬스체크 플러그인.
 
 ### 자동 수정
 
-`MISSING_SERVERS` 발견 시 다음 명령어로 자동 등록:
+`MISSING_SERVERS` 발견 시 누락된 서버에 대해 다음 명령어로 자동 등록:
 
 ```bash
 claude mcp add --transport http figma https://mcp.figma.com/mcp
+claude mcp add --transport http notion https://mcp.notion.com/mcp
+claude mcp add --transport http slack https://server.smithery.ai/slack/mcp
 ```
 
 등록 후 사용자에게 `/mcp`로 OAuth 인증이 필요할 수 있음을 안내.
@@ -32,14 +38,14 @@ claude mcp add --transport http figma https://mcp.figma.com/mcp
 |------|-----|------|------|
 | figma | https://mcp.figma.com/mcp | HTTP | OAuth |
 | notion | https://mcp.notion.com/mcp | HTTP | OAuth |
-| slack | https://server.smithery.ai/slack/mcp | HTTP | OAuth (Smithery)
+| slack | https://server.smithery.ai/slack/mcp | HTTP | OAuth (Smithery) |
 
 ## 명령어
 
 - `/mcp-check`: 수동으로 MCP 상태 확인 및 수정
 - `/mcp-fix`: 누락된 MCP 강제 등록
 
-## 안 쓸 때
+## 언제 쓰면 안 되는지
 
 - MCP를 사용하지 않는 프로젝트
 - 다른 MCP 관리 도구를 이미 사용 중인 경우

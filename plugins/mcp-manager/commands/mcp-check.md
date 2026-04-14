@@ -1,4 +1,5 @@
 ---
+name: mcp-check
 description: MCP 서버 상태 확인 및 자동 수정
 allowed-tools:
   - Bash
@@ -17,17 +18,21 @@ MCP 서버 상태를 확인하고 문제가 있으면 자동으로 수정한다.
 
 이 플러그인에서 관리하는 MCP:
 - **figma**: `https://mcp.figma.com/mcp` (HTTP)
+- **notion**: `https://mcp.notion.com/mcp` (HTTP)
+- **slack**: `https://server.smithery.ai/slack/mcp` (HTTP)
 
 ## 자동 수정
 
 누락된 MCP 발견 시:
 ```bash
 claude mcp add --transport http figma https://mcp.figma.com/mcp
+claude mcp add --transport http notion https://mcp.notion.com/mcp
+claude mcp add --transport http slack https://server.smithery.ai/slack/mcp
 ```
 
 ## 인증 안내
 
-HTTP MCP 서버(figma 등)는 OAuth 인증이 필요할 수 있다.
+HTTP MCP 서버(figma, notion, slack)는 OAuth 인증이 필요할 수 있다.
 등록 후 `/mcp` 명령어로 인증 상태를 확인하고, 필요시 사용자에게 인증을 안내한다.
 
 ## 실행

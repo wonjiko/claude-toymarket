@@ -9,14 +9,17 @@ Claude Code 플러그인 모음 저장소. 각 플러그인은 commands, agents,
 ## 구조
 
 ```
-plugins/
-├── [plugin-name]/
-│   ├── .claude-plugin/plugin.json  # 메타데이터 (필수)
-│   ├── commands/                   # slash commands (*.md)
-│   ├── agents/                     # 에이전트 정의 (*.md)
-│   ├── skills/                     # AI skills (*/SKILL.md)
-│   └── hooks/                      # hooks.json + shell scripts
-.claude-plugin/marketplace.json     # 플러그인 카탈로그
+claude-toymarket/
+├── .claude-plugin/marketplace.json   # 플러그인 카탈로그
+├── plugins/
+│   └── [plugin-name]/                # 플러그인별로 필요한 디렉토리만 포함
+│       ├── .claude-plugin/plugin.json  # 메타데이터 (필수)
+│       ├── commands/                 # slash commands (*.md)
+│       ├── agents/                   # 에이전트 정의 (*.md)
+│       ├── skills/                   # AI skills (*/SKILL.md)
+│       └── hooks/                    # hooks.json + shell scripts
+├── templates/                        # 새 플러그인 템플릿
+└── CLAUDE.md                         # Claude용 컨텍스트
 ```
 
 ## 현재 플러그인
@@ -27,7 +30,7 @@ plugins/
 | matryoshka-plugin | 플러그인/컴포넌트 생성 도구 | skill-creator, agent-creator |
 | mcp-manager | MCP 서버 자동 관리 | 세션 시작 시 MCP 상태 체크 |
 | ppt-designer | HTML 프레젠테이션 생성 | ppt-designer |
-| dice | 주사위 굴리기 | /dice |
+| dice | 결정장애를 위한 주사위 | /dice |
 
 ## 개발
 
@@ -44,6 +47,7 @@ skill-creator skill 또는 agent-creator agent가 자동 트리거됨.
 ```bash
 ./plugins/matryoshka-plugin/scripts/lint-all.sh
 ```
+agents, skills의 frontmatter 필수 필드 및 구조 규칙을 검증한다.
 
 ## 레퍼런스
 

@@ -8,7 +8,7 @@
 Claude한테 물어보면 장단점 분석하고 난리치는데,
 가끔은 그냥 던지고 따르는 게 나음.
 
-## 언제 쓰면 안 되나
+## 언제 쓰면 안 되는지
 
 - 진지한 의사결정
 - 돈 관련
@@ -18,16 +18,10 @@ Claude한테 물어보면 장단점 분석하고 난리치는데,
 
 ## 설치
 
-`.claude/settings.json`에 추가:
+`~/.claude/settings.json`의 `plugins` 배열에 마켓플레이스를 등록하면 dice를 포함한 모든 플러그인을 사용할 수 있다:
 
 ```json
 {
-  "skills": {
-    "dice": {
-      "prompt": "[경로]/plugins/dice/prompt.md"
-    }
-  }
+  "plugins": ["https://github.com/wonjiko/claude-toymarket"]
 }
 ```
-
-또는 그냥 prompt.md 내용을 CLAUDE.md에 복붙해도 됨.

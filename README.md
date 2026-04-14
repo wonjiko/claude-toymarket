@@ -15,47 +15,55 @@
 
 ```
 claude-toymarket/
-├── plugins/          # 플러그인 모음
-├── templates/        # 새 플러그인 템플릿
-├── catalog.json      # 플러그인 목록
-└── CLAUDE.md         # Claude용 컨텍스트
+├── .claude-plugin/marketplace.json   # 플러그인 카탈로그
+├── plugins/                          # 플러그인 모음
+│   ├── dice/                         # 결정장애를 위한 주사위
+│   ├── skills-toybox/                # 범용 유틸리티 skill 모음
+│   ├── matryoshka-plugin/            # 플러그인/컴포넌트 생성 도구
+│   ├── mcp-manager/                  # MCP 서버 자동 관리
+│   └── ppt-designer/                 # HTML 프레젠테이션 생성
+├── templates/                        # 새 플러그인 템플릿
+└── CLAUDE.md                         # Claude용 컨텍스트
 ```
 
-## 사용법
+## 설치
 
-### 마켓플레이스 등록
-```bash
-# 로컬에서
-claude plugin marketplace add /path/to/claude-toymarket
+`~/.claude/settings.json`의 `plugins` 배열에 이 저장소 URL을 추가한다:
 
-# 또는 GitHub에서
-claude plugin marketplace add wonjiko/claude-toymarket
+```json
+{
+  "plugins": ["https://github.com/wonjiko/claude-toymarket"]
+}
 ```
 
-### 플러그인 설치
-```bash
-# 목록 확인
-claude plugin search claude-toymarket
+## 플러그인 목록
 
-# 설치
-claude plugin install dice@claude-toymarket
-claude plugin install typical-process@claude-toymarket
-```
+| 플러그인 | 설명 | 주요 기능 |
+|----------|------|-----------|
+| dice | 결정장애를 위한 주사위 | `/dice` |
+| skills-toybox | 범용 유틸리티 skill 모음 | commit, code-review, make-pr, retrospect, reflection, command-validator |
+| matryoshka-plugin | 플러그인/컴포넌트 생성 도구 | skill-creator, agent-creator |
+| mcp-manager | MCP 서버 자동 관리 | 세션 시작 시 MCP 상태 체크 |
+| ppt-designer | HTML 프레젠테이션 생성 | ppt-designer |
 
-### 플러그인 사용
+## 사용 예시
+
 ```bash
-# dice - 주사위 굴리기
+# dice - 주사위 굴리기 (slash command)
 /dice 점심 메뉴: 짜장면, 짬뽕, 볶음밥
 
-# typical-process - 세션 시작
-/typical-process:start add-feature
+# mcp-manager - MCP 상태 확인 (slash command)
+/mcp-check
+
+# ppt-designer - 프레젠테이션 생성 (skill, 자연어로 트리거)
+# "프레젠테이션 만들어줘", "PPT 만들어줘" 등으로 호출
 ```
 
 ## 플러그인 추가하기
 
-1. `plugins/` 아래에 폴더 생성
-2. `plugin.json` 작성 (템플릿 참고)
-3. `catalog.json`에 등록
+1. `plugins/[name]/` 아래에 폴더 생성
+2. `.claude-plugin/plugin.json` 작성 (`templates/plugin.json` 참고)
+3. `.claude-plugin/marketplace.json`에 등록
 
 ## 면책
 

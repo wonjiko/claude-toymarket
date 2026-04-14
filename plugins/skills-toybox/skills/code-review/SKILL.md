@@ -25,18 +25,16 @@ git push 전에 변경된 코드의 품질을 검증한다.
 
 ## 검토 기준
 
-- React Hooks 패턴 준수
+<!-- 아래 기준은 프로젝트에 맞게 수정 필요. 현재는 일반적인 웹 프로젝트 기준. -->
+
 - 보안 취약점
-- Material-UI v4 사용 여부 (금지)
 - console.log 존재 여부
 - 반복 코드, 유틸 함수화 가능 여부
-- 경계값 처리 빈 값, 음수, 최대값 등 엣지 케이스
-- 스타일 : ESLint 규칙 준수, camelCase 네이밍
-- 타입 정의 : interface/type 정의, any 타입 남용
-- null 처리 : optional chaining (`?.`), nullish coalescing (`??`) 사용
-- 컴포넌트 : props 타입 정의, key prop 누락, 불필요한 리렌더링
-- 이벤트 핸들러 : 핸들러 미구현, dead code 여부
-- 상태 관리 : 불필요한 state, derived state 사용 여부
+- 경계값 처리: 빈 값, 음수, 최대값 등 엣지 케이스
+- 스타일: lint 규칙 준수, 일관된 네이밍
+- 타입 정의: interface/type 정의, any 타입 남용
+- null 처리: optional chaining (`?.`), nullish coalescing (`??`) 사용
+- dead code 여부
 - locale 파일은 리뷰하지 않음
 
 ## Side-Effect 분석

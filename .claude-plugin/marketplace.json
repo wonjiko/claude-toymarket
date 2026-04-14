@@ -12,7 +12,7 @@
       "source": "./plugins/dice",
       "category": "utility"
     },
-{
+    {
       "name": "matryoshka-plugin",
       "description": "플러그인 컴포넌트를 만드는 플러그인 - skill, agent 생성기",
       "source": "./plugins/matryoshka-plugin",
@@ -20,19 +20,19 @@
     },
     {
       "name": "skills-toybox",
-      "description": "자주 쓰는 유틸리티 skill 모음집",
+      "description": "범용 유틸리티 skill 모음",
       "source": "./plugins/skills-toybox",
       "category": "utility"
     },
     {
       "name": "mcp-manager",
-      "description": "MCP 서버 자동 연결 및 헬스체크",
+      "description": "MCP 서버 자동 연결 및 헬스체크. 세션 시작 시 MCP 상태 확인 후 문제 발견 시 자동 수정 시도.",
       "source": "./plugins/mcp-manager",
       "category": "utility"
     },
     {
       "name": "ppt-designer",
-      "description": "topic-outline.md 기반 HTML 프레젠테이션 생성",
+      "description": "topic-outline.md를 기반으로 HTML 프레젠테이션을 생성하는 플러그인",
       "source": "./plugins/ppt-designer",
       "category": "utility"
     }

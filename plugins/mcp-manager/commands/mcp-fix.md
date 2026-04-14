@@ -1,4 +1,5 @@
 ---
+name: mcp-fix
 description: 누락된 MCP 서버 자동 등록
 allowed-tools:
   - Bash
@@ -8,14 +9,15 @@ allowed-tools:
 
 ## MCP 등록 명령
 
-Figma MCP 등록:
 ```bash
 claude mcp add --transport http figma https://mcp.figma.com/mcp
+claude mcp add --transport http notion https://mcp.notion.com/mcp
+claude mcp add --transport http slack https://server.smithery.ai/slack/mcp
 ```
 
 ## 절차
 
-1. 위 명령어를 실행해서 MCP 등록
+1. 위 명령어를 실행해서 누락된 MCP 등록
 2. 등록 성공 여부 확인
 3. 사용자에게 `/mcp`로 OAuth 인증 완료하라고 안내
 
