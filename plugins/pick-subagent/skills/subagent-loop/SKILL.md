@@ -1,0 +1,219 @@
+---
+name: subagent-loop
+description: This skill should be used when the user wants to "서브에이전트 루프", "subagent loop", "검증 루프", "subagent pipeline", "서브에이전트 파이프라인", or needs iterative subagent execution with strict 10-point verification scoring. High token cost — only for tasks requiring rigorous quality assurance through repeated execution and verification cycles.
+version: 0.1.0
+---
+
+# Subagent Loop
+
+서브에이전트 파이프라인을 통해 작업을 수행하고, 10점 만점 검증 루프로 품질을 보장한다.
+토큰을 많이 소모하지만 엄격한 검증을 통해 높은 품질을 확보하는 것이 목적.
+
+## 파이프라인 개요
+
+```
+1. [조건부] Planner (opus) → plan.md 작성
+2. Verification Planner (opus) → verification-plan.md 작성
+3. Executor (sonnet) → 구현 + 커밋 + execution-{N}.md 작성
+4. Verifier (opus) → 검증 + verification-{N}.md 작성
+5. 10점 → squash 커밋 → 완료
+   10점 미만 → 교착 감지 확인 → 3번으로 복귀
+```
+
+## 시작 절차
+
+1. 사용자에게 topic 이름을 확인받는다 (영문 kebab-case, 예: "add-auth", "fix-parser")
+2. `docs/subagent-loop/{topic}/` 디렉토리를 생성한다
+3. 플랜 존재 여부를 확인한다:
+   - 플랜이 있으면: 사용자가 알려준 경로의 파일을 `docs/subagent-loop/{topic}/plan.md`로 복사 → Verification Planner부터 시작
+   - 플랜이 없으면: Planner부터 시작
+
+## 서브에이전트 디스패치
+
+### 1. Planner (opus) — 조건부
+
+플랜이 없을 때만 실행.
+
+```
+Agent 도구:
+  model: opus
+  description: "Create implementation plan for {topic}"
+  prompt: |
+    아래 사용자 요청에 대한 구현 플랜을 작성하라.
+    프로젝트를 탐색하고, 실행 가능한 단계별 플랜을 만들어라.
+
+    ## 사용자 요청
+    {사용자가 요청한 내용}
+
+    ## 출력
+    결과를 다음 파일에 작성하라: docs/subagent-loop/{topic}/plan.md
+
+    파일 첫 줄은 반드시 `STATUS: DONE` 또는 `STATUS: BLOCKED`로 시작한다.
+    BLOCKED인 경우 사유를 작성한다.
+```
+
+완료 후: `plan.md` 첫 줄에서 STATUS 확인. BLOCKED이면 사용자에게 보고.
+
+### 2. Verification Planner (opus)
+
+```
+Agent 도구:
+  model: opus
+  description: "Create verification plan for {topic}"
+  prompt: |
+    다음 플랜 파일을 읽고, 10점 만점의 검증 계획을 작성하라.
+
+    ## 플랜 파일
+    docs/subagent-loop/{topic}/plan.md
+
+    ## 지침
+    - 플랜의 작업 유형에 맞는 채점 항목을 직접 설계하라
+      - 코드 작업: 기능 완성도, 테스트 커버리지, 코드 품질, 스펙 정합성 등
+      - 문서 작업: 정확성, 완성도, 일관성 등
+      - 기타: 작업 유형에 적합한 항목
+    - 각 항목의 배점과 채점 기준을 구체적으로 명시하라
+    - 총합이 10점이 되도록 하라
+    - 실행 가능한 검증 방법이 있으면 포함하라 (테스트 명령어, lint 등)
+
+    ## 출력
+    결과를 다음 파일에 작성하라: docs/subagent-loop/{topic}/verification-plan.md
+
+    파일 첫 줄은 반드시 `STATUS: DONE` 또는 `STATUS: BLOCKED`로 시작한다.
+```
+
+완료 후: `verification-plan.md` 첫 줄에서 STATUS 확인.
+
+### 3. Executor (sonnet)
+
+```
+Agent 도구:
+  model: sonnet
+  description: "Execute plan for {topic} (round {N})"
+  prompt: |
+    플랜을 읽고 구현하라.
+
+    ## 플랜 파일
+    docs/subagent-loop/{topic}/plan.md
+
+    ## 이전 검증 피드백 (있으면)
+    docs/subagent-loop/{topic}/verification-{N-1}.md
+    ↑ 이 파일이 존재하면 반드시 읽고, 감점 사유와 개선 필요 사항을 확인한 후 구현에 반영하라.
+
+    ## 지침
+    - 플랜의 모든 항목을 구현하라
+    - 이전 검증 피드백이 있으면 감점 사유를 해결하라
+    - 구현 완료 후 커밋하라
+    - 작업 불가능한 상황이면 BLOCKED로 보고하라
+
+    ## 출력
+    결과를 다음 파일에 작성하라: docs/subagent-loop/{topic}/execution-{NN}.md
+    (NN은 2자리 패딩: 01, 02, ...)
+
+    파일 형식:
+    ```
+    STATUS: DONE (또는 BLOCKED)
+
+    ## 변경 파일
+    - path/to/file1 — 설명
+    - path/to/file2 — 설명
+
+    ## 수행 내용 요약
+    (무엇을 했는지 간결하게)
+
+    ## 커밋
+    (커밋 해시와 메시지)
+    ```
+```
+
+완료 후: `execution-{NN}.md` 첫 줄에서 STATUS 확인.
+
+### 4. Verifier (opus)
+
+```
+Agent 도구:
+  model: opus
+  description: "Verify execution for {topic} (round {N})"
+  prompt: |
+    검증 계획에 따라 구현 결과를 검증하라.
+
+    ## 검증 계획
+    docs/subagent-loop/{topic}/verification-plan.md
+
+    ## 실행 결과
+    docs/subagent-loop/{topic}/execution-{NN}.md
+
+    ## 지침
+    - 검증 계획을 읽고 채점 항목을 확인하라
+    - 실행 결과를 읽고 변경된 파일을 직접 확인하라
+    - 실행 가능한 검증(테스트, lint 등)이 검증 계획에 있으면 직접 실행하라
+    - 각 항목별로 채점하고 감점 사유를 구체적으로 기록하라
+    - 개선 필요 사항은 다음 Executor가 읽고 바로 행동할 수 있는 수준으로 작성하라
+    - 검증 계획의 기준을 엄격하게 적용하라. 관대하게 채점하지 마라.
+
+    ## 출력
+    결과를 다음 파일에 작성하라: docs/subagent-loop/{topic}/verification-{NN}.md
+
+    파일 형식:
+    ```
+    STATUS: DONE
+
+    ## 검증 결과: Round N
+
+    **총점: X/10**
+
+    | 항목 | 점수 | 감점 사유 |
+    |------|------|-----------|
+    | 항목명 | N/M | 구체적 사유 또는 "-" |
+
+    ## 개선 필요 사항
+    - (10점이면 "없음", 미만이면 구체적이고 실행 가능한 피드백)
+    ```
+```
+
+완료 후: `verification-{NN}.md`에서 STATUS와 `**총점: X/10**` 파싱.
+
+## 오케스트레이션 루프
+
+Verification Planner 완료 후, 오케스트레이터는 다음을 반복한다:
+
+```
+N = 1
+scores = []
+
+loop:
+  1. Executor 디스패치 (round N)
+  2. execution-{NN}.md 에서 STATUS 확인
+     - BLOCKED → 사용자에게 보고, 중단
+  3. Verifier 디스패치 (round N)
+  4. verification-{NN}.md 에서 점수 파싱
+  5. scores에 점수 추가
+  6. 판단:
+     - 10점 → 완료 처리로 이동
+     - 10점 미만:
+       - len(scores) >= 5 이고 max(scores[-5:]) - min(scores[-5:]) <= 1 → 교착
+         → 사용자에게 상황 보고 + 판단 요청
+       - 그 외 → N++, loop로 복귀
+```
+
+## 완료 처리
+
+10점 달성 시:
+
+1. 라운드 커밋들을 squash하여 단일 커밋으로 만든다
+2. 사용자에게 완료 보고한다
+3. `docs/subagent-loop/{topic}/` 파일들은 그대로 남긴다 (히스토리 추적용)
+
+## 교착 시 보고 형식
+
+```
+## 교착 상태 감지
+
+직전 5회 점수: [X, X, X, X, X]
+최고점: X, 최저점: X (차이: N)
+
+현재 상태를 확인하시고 다음 중 하나를 선택해주세요:
+1. 계속 진행 (추가 라운드 실행)
+2. 플랜 수정 후 재시도
+3. 현재 상태로 완료 처리
+4. 중단
+```
