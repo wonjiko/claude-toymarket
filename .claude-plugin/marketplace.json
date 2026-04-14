@@ -35,6 +35,12 @@
       "description": "topic-outline.md를 기반으로 HTML 프레젠테이션을 생성하는 플러그인",
       "source": "./plugins/ppt-designer",
       "category": "utility"
+    },
+    {
+      "name": "pick-subagent",
+      "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드",
+      "source": "./plugins/pick-subagent",
+      "category": "utility"
     }
   ]
 }

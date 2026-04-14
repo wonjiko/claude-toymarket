@@ -30,6 +30,7 @@ claude-toymarket/
 | matryoshka-plugin | 플러그인/컴포넌트 생성 도구 | skill-creator, agent-creator |
 | mcp-manager | MCP 서버 자동 관리 | 세션 시작 시 MCP 상태 체크 |
 | ppt-designer | HTML 프레젠테이션 생성 | ppt-designer |
+| pick-subagent | 서브에이전트 모델을 골라 실행하는 슬래시 커맨드 | /sub-opus, /sub-sonnet, /sub-haiku |
 | dice | 결정장애를 위한 주사위 | /dice |
 
 ## 개발

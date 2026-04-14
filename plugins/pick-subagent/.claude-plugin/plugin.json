@@ -1,0 +1,8 @@
+{
+  "name": "pick-subagent",
+  "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드",
+  "version": "0.0.1",
+  "author": {
+    "name": "pulp"
+  }
+}
