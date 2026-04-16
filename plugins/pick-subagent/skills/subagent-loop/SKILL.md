@@ -85,24 +85,62 @@ Agent 도구:
 
 ### 3. Executor (sonnet)
 
+**Round 1**과 **Round 2+**에서 프롬프트가 다르다. Round 2부터는 plan.md 대신 직전 검증의 Delta Prompt만 읽어 토큰을 절약한다.
+
+#### Round 1 (최초 실행)
+
 ```
 Agent 도구:
   model: sonnet
-  description: "Execute plan for {topic} (round {N})"
+  description: "Execute plan for {topic} (round 1)"
   prompt: |
     플랜을 읽고 구현하라.
 
     ## 플랜 파일
     docs/subagent-loop/{topic}/plan.md
 
-    ## 이전 검증 피드백 (있으면)
-    docs/subagent-loop/{topic}/verification-{N-1}.md
-    ↑ 이 파일이 존재하면 반드시 읽고, 감점 사유와 개선 필요 사항을 확인한 후 구현에 반영하라.
-
     ## 지침
     - 플랜의 모든 항목을 구현하라
-    - 이전 검증 피드백이 있으면 감점 사유를 해결하라
     - 구현 완료 후 커밋하라
+    - 작업 불가능한 상황이면 BLOCKED로 보고하라
+
+    ## 출력
+    결과를 다음 파일에 작성하라: docs/subagent-loop/{topic}/execution-{NN}.md
+    (NN은 2자리 패딩: 01, 02, ...)
+
+    파일 형식:
+    ```
+    STATUS: DONE (또는 BLOCKED)
+
+    ## 변경 파일
+    - path/to/file1 — 설명
+    - path/to/file2 — 설명
+
+    ## 수행 내용 요약
+    (무엇을 했는지 간결하게)
+
+    ## 커밋
+    (커밋 해시와 메시지)
+    ```
+```
+
+#### Round 2+ (재실행)
+
+```
+Agent 도구:
+  model: sonnet
+  description: "Execute plan for {topic} (round {N})"
+  prompt: |
+    직전 검증에서 감점된 부분을 수정하라.
+
+    ## Delta Prompt (수정 지시)
+    docs/subagent-loop/{topic}/verification-{N-1}.md 파일의 `## Delta Prompt` 섹션을 읽어라.
+    이 섹션에 다음 라운드에서 수정해야 할 내용이 파일 경로와 함께 구체적으로 기술되어 있다.
+    Delta Prompt의 지시만 수행하라. plan.md를 다시 읽을 필요 없다.
+
+    ## 지침
+    - Delta Prompt의 지시 사항을 모두 수행하라
+    - 수정 완료 후 커밋하라
     - 작업 불가능한 상황이면 BLOCKED로 보고하라
 
     ## 출력
@@ -167,6 +205,14 @@ Agent 도구:
 
     ## 개선 필요 사항
     - (10점이면 "없음", 미만이면 구체적이고 실행 가능한 피드백)
+
+    ## Delta Prompt
+    (10점이면 이 섹션 생략)
+    다음 Executor가 plan.md 없이 바로 작업할 수 있는 자기완결적 수정 지시문.
+    각 지시는 대상 파일 경로와 구체적 변경 내용을 명령형으로 작성한다.
+    예:
+    - `plugins/foo/bar.md` — 3번째 항목의 description을 "X"에서 "Y"로 수정
+    - `src/utils.ts` — validateInput 함수에 null 체크 추가
     ```
 ```
 
