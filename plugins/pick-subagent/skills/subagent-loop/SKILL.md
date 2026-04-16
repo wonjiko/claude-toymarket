@@ -1,7 +1,7 @@
 ---
 name: subagent-loop
 description: This skill should be used when the user wants to "서브에이전트 루프", "subagent loop", "검증 루프", "subagent pipeline", "서브에이전트 파이프라인", or needs iterative subagent execution with strict 10-point verification scoring. High token cost — only for tasks requiring rigorous quality assurance through repeated execution and verification cycles.
-version: 0.1.0
+version: 0.2.0
 ---
 
 # Subagent Loop
@@ -165,12 +165,16 @@ Agent 도구:
 
 완료 후: `execution-{NN}.md` 첫 줄에서 STATUS 확인.
 
-### 4. Verifier (opus)
+### 4. Verifier
+
+Round 1은 전체 검증(opus), Round 2+는 직전 감점 항목만 재검증(sonnet).
+
+#### Round 1 — Full Sweep (opus)
 
 ```
 Agent 도구:
   model: opus
-  description: "Verify execution for {topic} (round {N})"
+  description: "Verify execution for {topic} (round {N}, full sweep)"
   prompt: |
     검증 계획에 따라 구현 결과를 검증하라.
 
@@ -195,7 +199,7 @@ Agent 도구:
     ```
     STATUS: DONE
 
-    ## 검증 결과: Round N
+    ## 검증 결과: Round N (Full Sweep)
 
     **총점: X/10**
 
@@ -216,6 +220,54 @@ Agent 도구:
     ```
 ```
 
+#### Round 2+ — Differential Verification (sonnet)
+
+```
+Agent 도구:
+  model: sonnet
+  description: "Verify execution for {topic} (round {N}, differential)"
+  prompt: |
+    직전 검증에서 감점된 항목만 재검증하라.
+
+    ## 직전 검증 결과
+    docs/subagent-loop/{topic}/verification-{N-1}.md
+
+    ## 이번 실행 결과
+    docs/subagent-loop/{topic}/execution-{NN}.md
+
+    ## 지침
+    - 직전 검증에서 감점된 항목만 재검증하라
+    - 만점이었던 항목은 직전 점수를 그대로 유지하라 (재검증하지 않음)
+    - 감점 항목에 대해: execution-{NN}.md의 변경 파일만 확인하라
+    - 실행 가능한 검증이 있으면 해당 항목에 한해서만 실행하라
+    - verification-plan.md를 다시 읽을 필요 없다 — 직전 verification에 채점 기준이 이미 있다
+
+    ## 출력
+    결과를 다음 파일에 작성하라: docs/subagent-loop/{topic}/verification-{NN}.md
+
+    파일 형식:
+    ```
+    STATUS: DONE
+
+    ## 검증 결과: Round N (Differential)
+
+    **총점: X/10**
+
+    | 항목 | 점수 | 감점 사유 |
+    |------|------|-----------|
+    | 항목명 | N/M | 구체적 사유 또는 "-" |
+    | (만점 유지) 항목명 | M/M | 직전 라운드 점수 유지 |
+
+    ## 개선 필요 사항
+    - (10점이면 "없음", 미만이면 구체적이고 실행 가능한 피드백)
+
+    ## Delta Prompt
+    (10점이면 이 섹션 생략)
+    다음 Executor가 plan.md 없이 바로 작업할 수 있는 자기완결적 수정 지시문.
+    각 지시는 대상 파일 경로와 구체적 변경 내용을 명령형으로 작성한다.
+    ```
+```
+
 완료 후: `verification-{NN}.md`에서 STATUS와 `**총점: X/10**` 파싱.
 
 ## 오케스트레이션 루프
@@ -225,20 +277,35 @@ Verification Planner 완료 후, 오케스트레이터는 다음을 반복한다
 ```
 N = 1
 scores = []
+pending_full_sweep = false
 
 loop:
-  1. Executor 디스패치 (round N)
-  2. execution-{NN}.md 에서 STATUS 확인
-     - BLOCKED → 사용자에게 보고, 중단
-  3. Verifier 디스패치 (round N)
-  4. verification-{NN}.md 에서 점수 파싱
-  5. scores에 점수 추가
-  6. 판단:
-     - 10점 → 완료 처리로 이동
+  1. if pending_full_sweep:
+       Executor 건너뜀 (수정할 내용 없음)
+     else:
+       Executor 디스패치 (round N)
+       execution-{NN}.md에서 STATUS 확인
+         - BLOCKED → 사용자에게 보고, 중단
+
+  2. Verifier 디스패치:
+     if N == 1 또는 pending_full_sweep:
+       Full Sweep Verifier (opus)
+       — pending_full_sweep인 경우 직전 execution 파일을 참조
+       pending_full_sweep = false
+     else:
+       Differential Verifier (sonnet, 감점 항목만)
+
+  3. verification-{NN}.md에서 점수 파싱
+  4. scores에 점수 추가
+
+  5. 판단:
+     - 10점:
+       if 이번이 Full Sweep → 완료 처리로 이동
+       if 이번이 Differential → pending_full_sweep = true, N++, loop
      - 10점 미만:
        - len(scores) >= 5 이고 max(scores[-5:]) - min(scores[-5:]) <= 1 → 교착
          → 사용자에게 상황 보고 + 판단 요청
-       - 그 외 → N++, loop로 복귀
+       - 그 외 → N++, loop
 ```
 
 ## 완료 처리
