@@ -28,13 +28,11 @@ claude-toymarket/
 
 ## 설치
 
-`~/.claude/settings.json`의 `plugins` 배열에 이 저장소 URL을 추가한다:
+1. Claude Code에서 `/plugin` 실행
+2. **Marketplace** 탭 → **Add new marketplace** 선택
+3. `wonjiko/claude-toymarket` 입력
 
-```json
-{
-  "plugins": ["https://github.com/wonjiko/claude-toymarket"]
-}
-```
+끝.
 
 ## 플러그인 목록
 
