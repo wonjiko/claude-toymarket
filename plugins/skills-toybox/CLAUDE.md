@@ -26,7 +26,8 @@ skills-toybox/
     ├── make-pr/                 # PR 생성
     ├── retrospect/              # 세션 회고
     ├── reflection/              # Claude instructions 분석/개선
-    └── command-validator/       # command 검증 도구
+    ├── command-validator/       # command 검증 도구
+    └── respond-review/          # PR 리뷰 대응
 ```
 
 ## 레퍼런스

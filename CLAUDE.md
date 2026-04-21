@@ -26,7 +26,7 @@ claude-toymarket/
 
 | 플러그인 | 설명 | 주요 기능 |
 |----------|------|-----------|
-| skills-toybox | 범용 유틸리티 skill 모음 | commit, code-review, make-pr, retrospect, reflection, command-validator |
+| skills-toybox | 범용 유틸리티 skill 모음 | commit, code-review, make-pr, retrospect, reflection, command-validator, respond-review |
 | matryoshka-plugin | 플러그인/컴포넌트 생성 도구 | skill-creator, agent-creator |
 | mcp-manager | MCP 서버 자동 관리 | 세션 시작 시 MCP 상태 체크 |
 | ppt-designer | HTML 프레젠테이션 생성 | ppt-designer |
