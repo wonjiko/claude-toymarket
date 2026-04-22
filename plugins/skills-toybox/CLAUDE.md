@@ -23,7 +23,8 @@ skills-toybox/
 └── skills/                      # AI 기반 skill
     ├── commit/                  # Conventional Commit 커밋 생성
     ├── code-review/             # 로컬 코드 품질 검증
-    ├── make-pr/                 # PR 생성
+    ├── make-pr/                 # 범용 PR 생성
+    ├── make-pr-fe/              # 프론트엔드 PR 생성 (release/* 타겟, 템플릿 준수, 검증 하네스)
     ├── retrospect/              # 세션 회고
     ├── reflection/              # Claude instructions 분석/개선
     └── command-validator/       # command 검증 도구
