@@ -1,0 +1,23 @@
+{
+  "name": "matryoshka-plugin",
+  "version": "0.1.0",
+  "description": "플러그인 컴포넌트를 만드는 플러그인 - skill, agent 생성기",
+  "author": {
+    "name": "pulp"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Matryoshka Plugin",
+    "shortDescription": "Create plugin components",
+    "longDescription": "Create and validate reusable agent-facing plugin components such as skills and agent prompts.",
+    "developerName": "pulp",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Create a new plugin component"
+    ]
+  }
+}

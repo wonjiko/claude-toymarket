@@ -1,0 +1,185 @@
+{
+  "name": "claude-toymarket",
+  "description": "개인용 Claude Code 플러그인 장터",
+  "owner": {
+    "name": "wonjiko"
+  },
+  "codex": {
+    "displayName": "Toymarket"
+  },
+  "plugins": [
+    {
+      "name": "dice",
+      "description": "결정장애를 위한 주사위",
+      "version": "0.0.1",
+      "author": {
+        "name": "pulp"
+      },
+      "claude": {
+        "category": "utility"
+      },
+      "codex": {
+        "category": "Productivity",
+        "status": "ready",
+        "interface": {
+          "displayName": "Dice",
+          "shortDescription": "Randomly choose a number or option",
+          "longDescription": "Choose between options or roll a bounded random number from a lightweight decision helper.",
+          "developerName": "pulp",
+          "category": "Productivity",
+          "capabilities": [
+            "Interactive"
+          ],
+          "defaultPrompt": [
+            "Pick one option or roll a decision die"
+          ]
+        }
+      }
+    },
+    {
+      "name": "matryoshka-plugin",
+      "description": "플러그인 컴포넌트를 만드는 플러그인 - skill, agent 생성기",
+      "version": "0.1.0",
+      "author": {
+        "name": "pulp"
+      },
+      "claude": {
+        "category": "development"
+      },
+      "codex": {
+        "category": "Coding",
+        "status": "ready",
+        "interface": {
+          "displayName": "Matryoshka Plugin",
+          "shortDescription": "Create plugin components",
+          "longDescription": "Create and validate reusable agent-facing plugin components such as skills and agent prompts.",
+          "developerName": "pulp",
+          "category": "Coding",
+          "capabilities": [
+            "Interactive",
+            "Write"
+          ],
+          "defaultPrompt": [
+            "Create a new plugin component"
+          ]
+        }
+      }
+    },
+    {
+      "name": "skills-toybox",
+      "description": "범용 유틸리티 skill 모음",
+      "version": "1.0.0",
+      "author": {
+        "name": "pulp"
+      },
+      "claude": {
+        "category": "utility"
+      },
+      "codex": {
+        "category": "Coding",
+        "status": "ready",
+        "interface": {
+          "displayName": "Skills Toybox",
+          "shortDescription": "General development workflow skills",
+          "longDescription": "Reusable skills for commits, reviews, pull requests, retrospectives, and command validation.",
+          "developerName": "pulp",
+          "category": "Coding",
+          "capabilities": [
+            "Interactive",
+            "Write"
+          ],
+          "defaultPrompt": [
+            "Commit, review, or prepare a PR"
+          ]
+        }
+      }
+    },
+    {
+      "name": "mcp-manager",
+      "description": "MCP 서버 자동 연결 및 헬스체크. 세션 시작 시 MCP 상태 확인 후 문제 발견 시 자동 수정 시도.",
+      "version": "0.1.0",
+      "author": {
+        "name": "pulp"
+      },
+      "claude": {
+        "category": "utility"
+      },
+      "codex": {
+        "category": "Productivity",
+        "status": "claude-only",
+        "interface": {
+          "displayName": "MCP Manager",
+          "shortDescription": "Check and repair MCP setup",
+          "longDescription": "Inspect configured MCP servers and route repairs through shared scripts where possible.",
+          "developerName": "pulp",
+          "category": "Productivity",
+          "capabilities": [
+            "Interactive",
+            "Write"
+          ],
+          "defaultPrompt": [
+            "Check MCP server health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ppt-designer",
+      "description": "topic-outline.md를 기반으로 HTML 프레젠테이션을 생성하는 플러그인",
+      "version": "0.1.0",
+      "author": {
+        "name": "pulp"
+      },
+      "claude": {
+        "category": "utility"
+      },
+      "codex": {
+        "category": "Productivity",
+        "status": "ready",
+        "interface": {
+          "displayName": "PPT Designer",
+          "shortDescription": "Build HTML presentations",
+          "longDescription": "Generate structured HTML presentations from outlines and presentation-specific instructions.",
+          "developerName": "pulp",
+          "category": "Productivity",
+          "capabilities": [
+            "Interactive",
+            "Write"
+          ],
+          "defaultPrompt": [
+            "Create an HTML presentation"
+          ]
+        }
+      }
+    },
+    {
+      "name": "pick-subagent",
+      "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드 + 서브에이전트 루프 스킬",
+      "version": "0.1.0",
+      "author": {
+        "name": "pulp"
+      },
+      "claude": {
+        "category": "utility",
+        "marketplaceDescription": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드"
+      },
+      "codex": {
+        "category": "Coding",
+        "status": "claude-only",
+        "interface": {
+          "displayName": "Pick Subagent",
+          "shortDescription": "Route work to subagents",
+          "longDescription": "Delegate bounded work to subagents and use a validation loop to evaluate their output.",
+          "developerName": "pulp",
+          "category": "Coding",
+          "capabilities": [
+            "Interactive"
+          ],
+          "defaultPrompt": [
+            "Delegate this task to a subagent"
+          ]
+        }
+      }
+    }
+  ]
+}

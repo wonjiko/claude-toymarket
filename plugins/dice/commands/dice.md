@@ -19,9 +19,16 @@ argument-hint: [max | option1 option2 ...]
 
 ## 동작
 
+공용 스크립트를 실행한다:
+
+```
+!`${CLAUDE_PLUGIN_ROOT}/scripts/roll.py "$ARGUMENTS"`
+```
+
 1. 인자가 없으면: 1-6 주사위
 2. 숫자 하나면: 1-N 주사위
 3. 여러 단어면: 그 중 하나 랜덤 선택
+4. 쉼표로 구분된 값이면: 쉼표 단위로 랜덤 선택
 
 ## 출력 형식
 

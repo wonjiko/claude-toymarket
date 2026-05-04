@@ -15,3 +15,5 @@
 ## 구성
 
 - `commands/dice.md` - `/dice` 명령어
+- `skills/dice/SKILL.md` - Codex용 skill adapter
+- `scripts/roll.py` - 공용 실행 로직

@@ -1,21 +1,21 @@
 ---
 name: skill-creator
-description: This skill should be used when the user wants to "create a skill", "add a skill", "make a new skill", "create a command", "add a command", or needs guidance on skill structure for Claude Code plugins.
+description: This skill should be used when the user wants to "create a skill", "add a skill", "make a new skill", "create a command", "add a command", or needs guidance on skill structure for Claude Code or Codex plugins.
 version: 0.2.0
 ---
 
 # Skill Creator
 
-새로운 Claude Code skill을 생성하는 skill.
+새로운 Claude Code 또는 Codex skill을 생성하는 skill.
 
 ## Skill이란?
 
-Skill은 Claude의 특정 도메인 지식과 워크플로우를 확장하는 모듈.
-- slash command (사용자가 `/name`으로 호출)
-- 전문 워크플로우 (Claude가 자동 트리거)
+Skill은 agent의 특정 도메인 지식과 워크플로우를 확장하는 모듈.
+- Claude: slash command adapter 또는 자동 트리거 workflow로 연결 가능
+- Codex: `SKILL.md` metadata 기반으로 자동 트리거
 - 도메인 지식과 스크립트 번들
 
-> **참고**: 과거 command와 skill은 별도 컴포넌트였으나 현재 skill로 통합됨.
+> **참고**: Claude command는 Codex에 1:1 대응하지 않는다. 공용 동작은 skill/script에 두고 command는 Claude adapter로 둔다.
 
 ## 프로세스
 
@@ -32,7 +32,8 @@ Skill은 Claude의 특정 도메인 지식과 워크플로우를 확장하는 �
 
 ### 2. 레퍼런스 확인
 
-`~/.claude/plugins/marketplaces/claude-plugins-official/plugins/*/skills/` 에서 유사한 skill 패턴 확인.
+- Claude 전용 패턴: `~/.claude/plugins/marketplaces/claude-plugins-official/plugins/*/skills/`
+- Codex/dual runtime 패턴: 이 저장소의 `docs/dual-runtime-architecture.md`, `CHECKLIST.codex.md`, `catalog/toymarket.json`
 
 ### 3. Skill 설계
 
@@ -42,8 +43,8 @@ Skill은 Claude의 특정 도메인 지식과 워크플로우를 확장하는 �
 - 명확하고 설명적인 이름
 
 **description**
-- "This skill should be used when..." 으로 시작
-- 트리거 조건 명시
+- 트리거 조건을 구체적으로 명시
+- 이 저장소에서는 Claude/Codex 양쪽 호환을 위해 "This skill should be used when..." 형식을 기본값으로 사용
 
 **구조**
 ```
@@ -80,7 +81,7 @@ version: 0.1.0
 - [ ] frontmatter가 `---`로 시작하고 끝나는지
 - [ ] `name` 필드가 존재하는지
 - [ ] `description`이 "This skill should be used when"으로 시작하는지
-- [ ] `version` 필드가 존재하는지
+- [ ] 이 저장소 기준으로 `version` 필드가 존재하는지
 - [ ] 파일명이 `SKILL.md`인지 (대문자)
 - [ ] 폴더 구조가 `skills/[name]/SKILL.md`인지
 
@@ -95,7 +96,7 @@ version: 0.1.0
 |------|------|------|
 | name | ✓ | skill 이름 |
 | description | ✓ | 트리거 조건 |
-| version | ✓ | 버전 (semver) |
+| version | ✓ | 이 저장소에서 요구하는 버전 (semver) |
 
 ## Progressive Disclosure
 

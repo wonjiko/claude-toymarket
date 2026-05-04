@@ -6,14 +6,14 @@ version: 0.1.0
 
 # Frontend PR 생성
 
-Meissa Frontend 저장소용 PR 생성. Frontend PR Guide를 **엄격히 준수**하고, `release/*` 우선 base, assignee·label 자동 설정, 생성 후 검증 서브에이전트로 결과를 교차 확인한다.
+Meissa Frontend 저장소용 PR 생성. Frontend PR Guide를 **엄격히 준수**하고, `release/*` 우선 base, assignee·label 자동 설정, 생성 후 런타임이 허용하는 방식으로 결과를 교차 확인한다.
 
 범용 `make-pr`와의 차이:
 - 제목은 `[Feature|Bridge|QA|Release|Test] subject` 형식 고정
 - 본문은 Description about change / Context / References, Discussions, etc 템플릿 준수
 - Test scope / Change impact 섹션 포함
 - Label은 Meissa FE 라벨 체계(D-n, level-n, release, bug, enhancement, migration 등)에서 선택
-- 생성 후 서브에이전트가 가이드 준수 여부를 검증하고 메타 항목은 자동 수정
+- 생성 후 검증 단계에서 가이드 준수 여부를 확인하고 메타 항목은 자동 수정
 
 ## 가이드 소스
 
@@ -154,9 +154,13 @@ confidence가 낮으면(예: 브랜치명이 관례와 맞지 않음) 사용자�
    - 라벨이 하나도 없으면 `--label` 생략
 4. 생성된 PR URL 캡처
 
-### Step 4: 검증 서브에이전트 dispatch
+### Step 4: 검증
 
-`references/verification-prompt.md`를 그대로 채워 Agent 도구(`subagent_type: general-purpose`)로 dispatch.
+`references/verification-prompt.md`를 그대로 채워 검증한다.
+
+- Claude Code에서 Agent 도구 사용이 가능한 경우: verification prompt를 서브에이전트에 전달한다.
+- Codex에서 사용자가 명시적으로 subagent 위임을 요청한 경우: `spawn_agent`로 verification prompt를 전달한다.
+- 그 외 Codex 실행에서는 메인 세션에서 같은 체크리스트를 직접 검증한다.
 
 전달 변수:
 - `<PR_URL>`
@@ -166,7 +170,7 @@ confidence가 낮으면(예: 브랜치명이 관례와 맞지 않음) 사용자�
 - `<EXPECTED_LABELS>` — JSON 배열 문자열
 - `<PR_TYPE>` — Feature/Bridge/QA/Release/Test
 
-서브에이전트는 체크리스트를 검증하고 메타·라벨·섹션 누락 같은 **기계적 수정**을 직접 수행한다. 제목/본문의 의미적 재작성이 필요하면 warn으로 보고만 한다.
+검증자는 체크리스트를 검증하고 메타·라벨·섹션 누락 같은 **기계적 수정**을 직접 수행한다. 제목/본문의 의미적 재작성이 필요하면 warn으로 보고만 한다.
 
 ### Step 5: 결과 보고
 
@@ -198,7 +202,7 @@ confidence가 낮으면(예: 브랜치명이 관례와 맞지 않음) 사용자�
 - 마케팅 언어 금지, 사실만
 - UI 변경 감지 시 스크린샷 플레이스홀더 명시하고 사용자에게 고지
 - Files Changed 30개 초과(번역 제외) 시 사유 섹션 추가
-- 검증 서브에이전트는 **반드시** 실행
+- 검증 단계는 **반드시** 실행. 서브에이전트 사용 여부는 런타임 정책을 따른다.
 
 ## 예외 처리
 
@@ -214,10 +218,10 @@ confidence가 낮으면(예: 브랜치명이 관례와 맞지 않음) 사용자�
 | PR 템플릿과 가이드 충돌 | 템플릿 섹션 유지 + 가이드 필수 섹션 병합 |
 | 라벨 매칭 불가 | 라벨 없이 생성, 검증 단계에서 사용자 확인 요청 |
 | gh CLI 미설치/미로그인 | 설치·로그인 안내 (https://cli.github.com) |
-| 검증 서브에이전트 실패 | PR URL은 유지, 수동 확인 항목 나열 |
+| 검증 실패 | PR URL은 유지, 수동 확인 항목 나열 |
 
 ## 참고 파일
 
 - 가이드 스냅샷: `references/frontend-pr-guide.md`
-- 검증 서브에이전트 프롬프트: `references/verification-prompt.md`
+- 검증 프롬프트: `references/verification-prompt.md`
 - 범용 PR 생성: `/skills-toybox:make-pr`

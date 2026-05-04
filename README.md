@@ -26,13 +26,35 @@ claude-toymarket/
 └── CLAUDE.md                         # Claude용 컨텍스트
 ```
 
-## 설치
+## Claude 설치
 
 1. Claude Code에서 `/plugin` 실행
 2. **Marketplace** 탭 → **Add new marketplace** 선택
 3. `wonjiko/claude-toymarket` 입력
 
 끝.
+
+## Codex 등록
+
+현재 로컬 작업 중인 이 폴더를 바로 등록:
+
+```bash
+codex plugin marketplace add /Users/pulp/Desktop/Repositories/claude-toymarket
+```
+
+커밋/푸시된 GitHub 버전을 등록:
+
+```bash
+codex plugin marketplace add wonjiko/claude-toymarket
+```
+
+GitHub로 등록한 경우 업데이트:
+
+```bash
+codex plugin marketplace upgrade claude-toymarket
+```
+
+로컬 경로로 등록한 marketplace는 Git marketplace가 아니므로 `upgrade` 대상이 아니다. 로컬 파일을 수정한 뒤에는 아래 검증을 통과시키고 새 Codex 세션에서 다시 확인한다.
 
 ## 플러그인 목록
 
@@ -62,6 +84,13 @@ claude-toymarket/
 1. `plugins/[name]/` 아래에 폴더 생성
 2. `.claude-plugin/plugin.json` 작성 (`templates/plugin.json` 참고)
 3. `.claude-plugin/marketplace.json`에 등록
+
+## Codex 호환성
+
+- 설계 기록: `docs/dual-runtime-architecture.md`
+- Codex 체크리스트: `CHECKLIST.codex.md`
+- Claude 검증: `python3 scripts/verify_repo.py --profile claude --full`
+- Codex/dual 검증: `python3 scripts/verify_repo.py --profile dual`
 
 ## 면책
 

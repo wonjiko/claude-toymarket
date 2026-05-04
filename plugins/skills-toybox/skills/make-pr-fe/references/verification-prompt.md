@@ -1,12 +1,12 @@
-# PR 검증 서브에이전트 프롬프트
+# PR 검증 프롬프트
 
-`make-pr-fe` skill이 PR을 생성한 직후, 이 프롬프트를 채워 Agent 도구(`subagent_type: general-purpose`)로 dispatch한다. 서브에이전트는 Frontend PR Guide 준수 여부를 검증하고, 기계적으로 고칠 수 있는 항목은 `gh pr edit`으로 **직접 수정**한 뒤 보고한다.
+`make-pr-fe` skill이 PR을 생성한 직후, 이 프롬프트를 채워 검증한다. 서브에이전트 사용이 가능한 런타임에서는 위임하고, 그렇지 않으면 메인 세션에서 동일한 체크리스트를 수행한다. 검증자는 Frontend PR Guide 준수 여부를 확인하고, 기계적으로 고칠 수 있는 항목은 `gh pr edit`으로 **직접 수정**한 뒤 보고한다.
 
 ---
 
 ## 프롬프트 템플릿
 
-> 아래 내용을 그대로 Agent 프롬프트로 전달. `<...>`는 호출부에서 치환.
+> 아래 내용을 그대로 검증 프롬프트로 사용. `<...>`는 호출부에서 치환.
 
 ```
 방금 생성된 Meissa Frontend PR의 품질을 Frontend PR Guide 기준으로 검증하고, 기계적으로 수정 가능한 문제는 `gh pr edit`으로 직접 고친 뒤 짧게 보고하라.
