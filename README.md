@@ -1,6 +1,6 @@
 # claude-toymarket
 
-개인용 Claude Code 플러그인 장터.
+개인용 Claude Code / Codex 하이브리드 플러그인 장터.
 실험적이고, 손으로 만들고, 한 사람이 관리함.
 
 ## 원칙
@@ -16,6 +16,7 @@
 ```
 claude-toymarket/
 ├── .claude-plugin/marketplace.json   # 플러그인 카탈로그
+├── .agents/plugins/marketplace.json  # Codex 플러그인 카탈로그
 ├── plugins/                          # 플러그인 모음
 │   ├── dice/                         # 결정장애를 위한 주사위
 │   ├── skills-toybox/                # 범용 유틸리티 skill 모음
@@ -86,6 +87,8 @@ codex plugin marketplace upgrade claude-toymarket
 3. `.claude-plugin/marketplace.json`에 등록
 
 ## Codex 호환성
+
+이 저장소는 Claude Code와 Codex 양쪽에서 쓰는 하이브리드 마켓플레이스를 목표로 한다.
 
 - 설계 기록: `docs/dual-runtime-architecture.md`
 - Codex 체크리스트: `CHECKLIST.codex.md`

@@ -1,6 +1,6 @@
 # Dual Runtime Architecture
 
-이 문서는 `claude-toymarket`를 Claude Code와 Codex 양쪽에서 쓰기 위한 기준을 기록한다.
+이 문서는 `claude-toymarket`를 Claude Code와 Codex 양쪽에서 쓰는 하이브리드 마켓플레이스로 유지하기 위한 기준을 기록한다.
 
 ## 목표
 

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This repository is being migrated from a Claude Code-only plugin marketplace into a dual Claude/Codex plugin collection.
+This repository is a Claude Code / Codex hybrid plugin marketplace. It is being migrated from a Claude Code-only plugin marketplace into a dual Claude/Codex plugin collection.
 
 ## Current Source Of Truth
 
