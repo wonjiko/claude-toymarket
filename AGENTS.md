@@ -23,16 +23,20 @@ All work in this repo follows the principles in `PRINCIPLES.md`.
 
 ```
 claude-toymarket/
-├── .claude-plugin/marketplace.json   # 플러그인 카탈로그
+├── catalog/toymarket.json            # 공용 원본 (source of truth)
+├── .claude-plugin/marketplace.json   # 생성된 Claude 플러그인 카탈로그
+├── .agents/plugins/marketplace.json  # 생성된 Codex 플러그인 카탈로그
 ├── plugins/
 │   └── [plugin-name]/                # 플러그인별로 필요한 디렉토리만 포함
-│       ├── .claude-plugin/plugin.json  # 메타데이터 (필수)
-│       ├── commands/                 # slash commands (*.md)
-│       ├── agents/                   # 에이전트 정의 (*.md)
-│       ├── skills/                   # AI skills (*/SKILL.md)
-│       └── hooks/                    # hooks.json + shell scripts
+│       ├── .claude-plugin/plugin.json  # 생성된 메타데이터 (Claude)
+│       ├── .codex-plugin/plugin.json   # 생성된 메타데이터 (Codex)
+│       ├── commands/                 # slash commands (*.md, Claude 전용)
+│       ├── agents/                   # 에이전트 정의 (*.md, Claude 전용)
+│       ├── skills/                   # AI skills (*/SKILL.md, 공유)
+│       └── hooks/                    # hooks.json + shell scripts (공유)
 ├── templates/                        # 새 플러그인 템플릿
-└── AGENTS.md                         # Claude/Codex 공용 컨텍스트
+├── AGENTS.md                         # Claude/Codex 공용 컨텍스트
+└── CLAUDE.md                         # @AGENTS.md import
 ```
 
 ## 현재 플러그인
@@ -50,9 +54,9 @@ claude-toymarket/
 
 ### 플러그인 생성
 
-1. `plugins/[name]/` 디렉토리 생성
-2. `.claude-plugin/plugin.json` 작성 (templates/plugin.json 참고)
-3. `.claude-plugin/marketplace.json`에 등록
+1. `plugins/[name]/` 디렉토리 생성, 실제 컴포넌트(commands/skills/agents/hooks) 작성
+2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, claude.category, codex.category, codex.status 등)
+3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `catalog/toymarket.json`으로부터 `.claude-plugin/marketplace.json`, `plugins/[name]/.claude-plugin/plugin.json`, `.agents/plugins/marketplace.json`, `plugins/[name]/.codex-plugin/plugin.json`을 생성한다. 이 파일들은 손으로 직접 쓰지 않는다 (## Editing Rules 참고)
 
 ### 컴포넌트 생성 (matryoshka-plugin 사용)
 
