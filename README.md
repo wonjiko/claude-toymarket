@@ -24,7 +24,8 @@ claude-toymarket/
 │   ├── mcp-manager/                  # MCP 서버 자동 관리
 │   └── ppt-designer/                 # HTML 프레젠테이션 생성
 ├── templates/                        # 새 플러그인 템플릿
-└── CLAUDE.md                         # Claude용 컨텍스트
+├── AGENTS.md                         # Claude/Codex 공용 컨텍스트 (CLAUDE.md가 import)
+└── PRINCIPLES.md                     # 작업 결과물 원칙
 ```
 
 ## Claude 설치
