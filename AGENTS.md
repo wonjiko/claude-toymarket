@@ -36,7 +36,8 @@ claude-toymarket/
 │       └── hooks/                    # hooks.json + shell scripts (공유)
 ├── templates/                        # 새 플러그인 템플릿
 ├── AGENTS.md                         # Claude/Codex 공용 컨텍스트
-└── CLAUDE.md                         # @AGENTS.md import
+├── CLAUDE.md                         # @AGENTS.md import
+└── PRINCIPLES.md                     # 작업 결과물 원칙
 ```
 
 ## 현재 플러그인
