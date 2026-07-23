@@ -24,7 +24,8 @@ claude-toymarket/
 │   ├── mcp-manager/                  # MCP 서버 자동 관리
 │   └── ppt-designer/                 # HTML 프레젠테이션 생성
 ├── templates/                        # 새 플러그인 템플릿
-└── CLAUDE.md                         # Claude용 컨텍스트
+├── AGENTS.md                         # Claude/Codex 공용 컨텍스트 (CLAUDE.md가 import)
+└── PRINCIPLES.md                     # 작업 결과물 원칙
 ```
 
 ## Claude 설치
@@ -82,9 +83,9 @@ codex plugin marketplace upgrade claude-toymarket
 
 ## 플러그인 추가하기
 
-1. `plugins/[name]/` 아래에 폴더 생성
-2. `.claude-plugin/plugin.json` 작성 (`templates/plugin.json` 참고)
-3. `.claude-plugin/marketplace.json`에 등록
+1. `plugins/[name]/` 아래에 폴더 생성, 실제 컴포넌트(commands/skills/agents/hooks) 작성
+2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, claude.category, codex.category, codex.status 등)
+3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `.claude-plugin/marketplace.json`, `plugins/[name]/.claude-plugin/plugin.json` 등 생성 파일을 만든다. 이 파일들은 손으로 직접 쓰지 않는다
 
 ## Codex 호환성
 

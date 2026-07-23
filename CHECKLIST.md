@@ -6,7 +6,7 @@
 - [ ] `plugins/` 하위 모든 디렉토리 → `marketplace.json`에 등록됨
 - [ ] `plugins/` 하위에 빈 디렉토리(plugin.json 없는) 없음
 
-## 2. CLAUDE.md 정합성
+## 2. AGENTS.md 정합성
 
 - [ ] "현재 플러그인" 표 ↔ `marketplace.json` 목록 일치
 - [ ] 각 플러그인 설명의 주요 기능 ↔ 실제 컴포넌트(commands/skills/agents) 일치
