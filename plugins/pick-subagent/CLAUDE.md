@@ -18,4 +18,5 @@ subagent-loop 스킬은 플랜→검증계획→실행→검증의 파이프라�
 - `commands/sub-opus.md` - `/sub-opus` Opus 모델 서브에이전트
 - `commands/sub-sonnet.md` - `/sub-sonnet` Sonnet 모델 서브에이전트
 - `commands/sub-haiku.md` - `/sub-haiku` Haiku 모델 서브에이전트
+- `commands/sub-fable.md` - `/sub-fable` Fable 모델 서브에이전트
 - `skills/subagent-loop/SKILL.md` - 서브에이전트 파이프라인 + 10점 검증 루프

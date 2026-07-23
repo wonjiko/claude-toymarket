@@ -1,6 +1,6 @@
 {
   "name": "pick-subagent",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드 + 서브에이전트 루프 스킬",
   "author": {
     "name": "pulp"
