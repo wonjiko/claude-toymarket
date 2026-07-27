@@ -1,18 +1,18 @@
 ---
 name: mcp-check
-description: MCP 서버 상태 확인 및 자동 수정
+description: MCP 서버 상태 확인 및 확인 후 수정
 allowed-tools:
   - Bash
   - Read
 ---
 
-MCP 서버 상태를 확인하고 문제가 있으면 자동으로 수정한다.
+MCP 서버 상태를 확인하고 문제가 있으면 사용자 확인 후 수정한다.
 
 ## 확인 절차
 
 1. `claude mcp list` 실행해서 현재 등록된 MCP 확인
 2. 플러그인의 `.mcp.json` 파일과 비교
-3. 누락된 MCP가 있으면 자동 등록
+3. 누락된 MCP가 있으면 사용자에게 등록 여부를 확인한 뒤 등록
 
 ## 필수 MCP 목록
 
@@ -21,9 +21,12 @@ MCP 서버 상태를 확인하고 문제가 있으면 자동으로 수정한다.
 - **notion**: `https://mcp.notion.com/mcp` (HTTP)
 - **slack**: `https://server.smithery.ai/slack/mcp` (HTTP)
 
-## 자동 수정
+## 확인 후 수정
 
-누락된 MCP 발견 시:
+누락된 MCP 발견 시 다음을 사용자에게 보여주고 등록해도 될지 확인한다: "다음 MCP 서버가 누락되었습니다: {목록}. 지금 등록할까요? (Y/n)"
+
+승인 시 다음 명령어로 등록:
+
 ```bash
 claude mcp add --transport http figma https://mcp.figma.com/mcp
 claude mcp add --transport http notion https://mcp.notion.com/mcp
@@ -41,4 +44,4 @@ HTTP MCP 서버(figma, notion, slack)는 OAuth 인증이 필요할 수 있다.
 
 위 결과에 따라:
 - `MCP_CHECK: OK` → "모든 MCP 정상"이라고 알림
-- `MCP_CHECK: MISSING_SERVERS` → 누락된 서버 자동 등록 시도 후 결과 보고
+- `MCP_CHECK: MISSING_SERVERS` → 누락된 서버를 사용자에게 확인받은 뒤 등록 시도, 결과 보고
