@@ -45,7 +45,7 @@ claude mcp add --transport http slack https://server.smithery.ai/slack/mcp
 ## 명령어
 
 - `/mcp-check`: 수동으로 MCP 상태 확인 및 수정
-- `/mcp-fix`: 누락된 MCP 강제 등록
+- `/mcp-fix`: 누락된 MCP 확인 후 등록
 
 ## 언제 쓰면 안 되는지
 
