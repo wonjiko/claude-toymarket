@@ -56,11 +56,16 @@ if [ -n "$CWD" ] && git -C "$CWD" rev-parse --is-inside-work-tree >/dev/null 2>&
         LOCK_MTIME="$(stat -f %m "$LOCK_FILE" 2>/dev/null || echo 0)"
         LOCK_AGE=$(( NOW - LOCK_MTIME ))
       fi
-      if [ "$LOCK_AGE" -ge 10 ]; then
+      if [ "$LOCK_AGE" -ge 15 ]; then
         touch "$LOCK_FILE"
         (
-          NUMBER_URL="$(gh pr list --repo "$OWNER_REPO" --head "$BRANCH" --state open --json number,url --limit 1 -q '.[0] | "\(.number)|\(.url)"' 2>/dev/null)"
-          printf '%s' "$NUMBER_URL" > "$CACHE_FILE"
+          gh pr list --repo "$OWNER_REPO" --head "$BRANCH" --state open --json number,url --limit 1 -q '.[0] | "\(.number)|\(.url)"' > "$CACHE_FILE.tmp" 2>/dev/null &
+          GH_PID=$!
+          ( sleep 10; kill -9 "$GH_PID" 2>/dev/null ) &
+          WATCHER_PID=$!
+          wait "$GH_PID" 2>/dev/null
+          kill "$WATCHER_PID" 2>/dev/null
+          mv -f "$CACHE_FILE.tmp" "$CACHE_FILE" 2>/dev/null
           rm -f "$LOCK_FILE"
         ) >/dev/null 2>&1 &
         disown
