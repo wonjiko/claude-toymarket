@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
-# Wrapper around statusline-bin (claudia-statusline) that appends the most
-# recently referenced Notion page in the current session as a clickable link.
+# Segment for the claudia-statusline orchestrator: prints the title of
+# the most recently referenced Notion page in the current session (as
+# a clickable OSC 8 hyperlink), or nothing. Reads the orchestrator's
+# raw stdin JSON on its own stdin.
+# Never blocks: transcript parsing runs in a detached background
+# process with a 30s cache + 15s lock + 10s hard timeout (macOS has no
+# `timeout`, so the timeout is a manual `sleep`+`kill`).
 set -u
 
-BIN="${BASH_SOURCE[0]}-bin"
-
-# Any subcommand/flag (generate-config, health, list-vars, hook, ...) goes
-# straight to the real binary so it behaves exactly as before.
-if [ "$#" -gt 0 ]; then
-  exec "$BIN" "$@"
-fi
-
 INPUT="$(cat)"
-OUTPUT="$(printf '%s' "$INPUT" | "$BIN")"
 
 TRANSCRIPT_PATH="$(printf '%s' "$INPUT" | python3 -c '
 import json, sys
@@ -23,38 +19,38 @@ except Exception:
     print("")
 ' 2>/dev/null)"
 
-NOTION_TAG=""
+[ -z "$TRANSCRIPT_PATH" ] && exit 0
+[ -f "$TRANSCRIPT_PATH" ] || exit 0
 
-if [ -n "$TRANSCRIPT_PATH" ] && [ -f "$TRANSCRIPT_PATH" ]; then
-  CACHE_DIR="${TMPDIR:-/tmp}/claudia-statusline-notion-cache"
-  mkdir -p "$CACHE_DIR"
-  KEY="$(printf '%s' "$TRANSCRIPT_PATH" | shasum | cut -d' ' -f1)"
-  CACHE_FILE="$CACHE_DIR/$KEY"
-  LOCK_FILE="$CACHE_FILE.lock"
+CACHE_DIR="${TMPDIR:-/tmp}/claudia-statusline-notion-cache"
+mkdir -p "$CACHE_DIR"
+KEY="$(printf '%s' "$TRANSCRIPT_PATH" | shasum | cut -d' ' -f1)"
+CACHE_FILE="$CACHE_DIR/$KEY"
+LOCK_FILE="$CACHE_FILE.lock"
 
-  NOW="$(date +%s)"
+NOW="$(date +%s)"
 
-  if [ -f "$CACHE_FILE" ]; then
-    CACHED_TITLE="$(sed -n '1p' "$CACHE_FILE" 2>/dev/null)"
-    CACHED_URL="$(sed -n '2p' "$CACHE_FILE" 2>/dev/null)"
-    MTIME="$(stat -f %m "$CACHE_FILE" 2>/dev/null || echo 0)"
-    AGE=$(( NOW - MTIME ))
-  else
-    CACHED_TITLE=""
-    CACHED_URL=""
-    AGE=999999
+if [ -f "$CACHE_FILE" ]; then
+  CACHED_TITLE="$(sed -n '1p' "$CACHE_FILE" 2>/dev/null)"
+  CACHED_URL="$(sed -n '2p' "$CACHE_FILE" 2>/dev/null)"
+  MTIME="$(stat -f %m "$CACHE_FILE" 2>/dev/null || echo 0)"
+  AGE=$(( NOW - MTIME ))
+else
+  CACHED_TITLE=""
+  CACHED_URL=""
+  AGE=999999
+fi
+
+if [ "$AGE" -ge 30 ]; then
+  LOCK_AGE=999999
+  if [ -f "$LOCK_FILE" ]; then
+    LOCK_MTIME="$(stat -f %m "$LOCK_FILE" 2>/dev/null || echo 0)"
+    LOCK_AGE=$(( NOW - LOCK_MTIME ))
   fi
-
-  if [ "$AGE" -ge 30 ]; then
-    LOCK_AGE=999999
-    if [ -f "$LOCK_FILE" ]; then
-      LOCK_MTIME="$(stat -f %m "$LOCK_FILE" 2>/dev/null || echo 0)"
-      LOCK_AGE=$(( NOW - LOCK_MTIME ))
-    fi
-    if [ "$LOCK_AGE" -ge 15 ]; then
-      touch "$LOCK_FILE"
-      (
-        tail -n 3000 "$TRANSCRIPT_PATH" | python3 -c '
+  if [ "$LOCK_AGE" -ge 15 ]; then
+    touch "$LOCK_FILE"
+    (
+      tail -n 3000 "$TRANSCRIPT_PATH" | python3 -c '
 import json, sys
 
 lines = sys.stdin.readlines()
@@ -121,25 +117,18 @@ if len(title) > 24:
 print(title)
 print(url)
 ' > "$CACHE_FILE.tmp" 2>/dev/null &
-        PARSE_PID=$!
-        ( sleep 10; kill -9 "$PARSE_PID" 2>/dev/null ) &
-        WATCHER_PID=$!
-        wait "$PARSE_PID" 2>/dev/null
-        kill "$WATCHER_PID" 2>/dev/null
-        mv -f "$CACHE_FILE.tmp" "$CACHE_FILE" 2>/dev/null
-        rm -f "$LOCK_FILE"
-      ) >/dev/null 2>&1 &
-      disown
-    fi
-  fi
-
-  if [ -n "$CACHED_URL" ]; then
-    NOTION_TAG=$'\033]8;;'"${CACHED_URL}"$'\033\\'$'\033[34m'"${CACHED_TITLE}"$'\033[0m'$'\033]8;;\033\\'
+      PARSE_PID=$!
+      ( sleep 10; kill -9 "$PARSE_PID" 2>/dev/null ) &
+      WATCHER_PID=$!
+      wait "$PARSE_PID" 2>/dev/null
+      kill "$WATCHER_PID" 2>/dev/null
+      mv -f "$CACHE_FILE.tmp" "$CACHE_FILE" 2>/dev/null
+      rm -f "$LOCK_FILE"
+    ) >/dev/null 2>&1 &
+    disown
   fi
 fi
 
-if [ -n "$NOTION_TAG" ]; then
-  printf '%s\n%s\n' "$OUTPUT" "$NOTION_TAG"
-else
-  printf '%s\n' "$OUTPUT"
-fi
+[ -z "$CACHED_URL" ] && exit 0
+
+printf '%s' $'\033]8;;'"${CACHED_URL}"$'\033\\'$'\033[34m'"${CACHED_TITLE}"$'\033[0m'$'\033]8;;\033\\'
