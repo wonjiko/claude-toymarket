@@ -114,6 +114,7 @@ for line in reversed(lines):
     if url:
         break
 
+title = title.replace("\n", " ").replace("\r", " ")
 if len(title) > 24:
     title = title[:24] + "…"
 

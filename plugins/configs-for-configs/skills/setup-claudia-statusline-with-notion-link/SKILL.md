@@ -33,9 +33,9 @@ version: 0.1.0
 ## 동작 방식
 
 - 인자가 있는 호출은 원본 바이너리로 패스스루한다. 인자 없이 stdin으로 JSON을 받는 기본 렌더링 호출에만 Notion 세그먼트를 추가한다.
-- Claude Code가 statusline에 넘기는 JSON에는 현재 세션 transcript 경로(`transcript_path`)가 들어있다. wrapper는 그 파일의 마지막 3000줄(`tail -n 3000`)만 읽어, `notion-fetch`/`notion-search` 계열 tool_use 호출과 그 결과(tool_result)를 역순으로 찾아 가장 최근 결과의 `title`/`url`을 뽑는다.
+- Claude Code가 statusline에 넘기는 JSON에는 현재 세션 transcript 경로(`transcript_path`)가 들어있다. wrapper는 그 파일의 마지막 3000줄(`tail -n 3000`)만 읽어, `notion-fetch`/`notion-search` 계열 tool_use 호출과 그 결과(tool_result)를 역순으로 찾아 가장 최근 결과의 `title`/`url`을 뽑는다. 3000줄 창 경계에서 tool_use는 창 밖, 그 tool_result만 창 안에 걸치면 그 쌍은 조용히 건너뛴다 — 크래시는 안 나지만 아주 긴 세션에서는 최신 참조를 놓치고 그보다 오래된(또는 아예 없는) 참조가 표시될 수 있다.
 - 매 렌더링마다 transcript를 다시 파싱하지 않는다. 캐시가 30초 이상 오래됐을 때만 백그라운드로 다시 파싱하고, 이번 렌더링에는 캐시값을 쓰거나 아무것도 붙이지 않는다. 백그라운드 파싱은 10초 타임아웃으로 강제 종료한다(PR 링크 skill과 동일한 lock+timeout 패턴 — macOS에 `timeout`이 없어서 수동 `sleep`+`kill`로 구현).
-- 캐시는 `$TMPDIR/claudia-statusline-notion-cache/`에 transcript 경로 해시로 저장하고, title/url을 줄바꿈으로 구분해 저장한다(제목에 `|`가 올 수 있어 PR skill의 파이프 구분과 다르게 했다).
+- 캐시는 `$TMPDIR/claudia-statusline-notion-cache/`에 transcript 경로 해시로 저장하고, title/url을 줄바꿈으로 구분해 저장한다(제목에 `|`가 올 수 있어 PR skill의 파이프 구분과 다르게 했다). 제목 자체에 개행이 섞여 들어와 이 2줄 포맷을 깨는 걸 막기 위해, 캐시에 쓰기 전 제목의 `\n`/`\r`은 공백으로 치환한다.
 - Notion 참조가 있으면 원래 출력 뒤에 새 줄로 제목(최대 24자, 초과 시 `…`)을 OSC 8 하이퍼링크로 추가한다. git/디렉터리 줄은 건드리지 않는다.
 
 ## 검증
