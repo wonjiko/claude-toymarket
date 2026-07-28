@@ -53,9 +53,9 @@ seen = []
 for line in reversed(lines):
     try:
         obj = json.loads(line)
+        cwd = obj.get("cwd")
     except Exception:
         continue
-    cwd = obj.get("cwd")
     if cwd and cwd not in seen_set:
         seen_set.add(cwd)
         seen.append(cwd)
