@@ -56,7 +56,7 @@ if [ "$AGE" -ge 30 ]; then
   if [ "$LOCK_AGE" -ge 15 ]; then
     touch "$LOCK_FILE"
     (
-      gh pr list --repo "$OWNER_REPO" --head "$BRANCH" --state open --json number,url --limit 1 -q '.[0] | "\(.number)|\(.url)"' > "$CACHE_FILE.tmp" 2>/dev/null &
+      gh pr list --repo "$OWNER_REPO" --head "$BRANCH" --state open --json number,url --limit 1 -q '.[0] // empty | "\(.number)|\(.url)"' > "$CACHE_FILE.tmp" 2>/dev/null &
       GH_PID=$!
       ( sleep 10; kill -9 "$GH_PID" 2>/dev/null ) &
       WATCHER_PID=$!
@@ -73,6 +73,9 @@ fi
 
 PR_NUMBER="${CACHED%%|*}"
 PR_URL="${CACHED#*|}"
+
+[ "$PR_NUMBER" = "null" ] && exit 0
+
 LINK_TEXT="${REPO_NAME}#${PR_NUMBER}"
 
 if [ -n "$PR_URL" ] && [ "$PR_URL" != "$CACHED" ]; then
