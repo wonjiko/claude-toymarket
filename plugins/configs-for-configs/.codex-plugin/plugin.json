@@ -1,6 +1,6 @@
 {
   "name": "configs-for-configs",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "로컬 개발 도구 설정을 재현 가능한 스크립트로 재구성하는 skill 모음",
   "author": {
     "name": "pulp"
