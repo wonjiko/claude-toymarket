@@ -1,0 +1,22 @@
+{
+  "name": "configs-for-configs",
+  "version": "0.1.0",
+  "description": "로컬 개발 도구 설정을 재현 가능한 스크립트로 재구성하는 skill 모음",
+  "author": {
+    "name": "pulp"
+  },
+  "interface": {
+    "displayName": "Configs for Configs",
+    "shortDescription": "Reconfigure local dev tools",
+    "longDescription": "Wrap or patch an already-installed local tool with a reproducible setup script, such as adding a PR link to claudia-statusline.",
+    "developerName": "pulp",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Set up claudia-statusline with a PR link"
+    ]
+  }
+}

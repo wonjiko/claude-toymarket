@@ -22,7 +22,8 @@ claude-toymarket/
 │   ├── skills-toybox/                # 범용 유틸리티 skill 모음
 │   ├── matryoshka-plugin/            # 플러그인/컴포넌트 생성 도구
 │   ├── mcp-manager/                  # MCP 서버 자동 관리
-│   └── ppt-designer/                 # HTML 프레젠테이션 생성
+│   ├── ppt-designer/                 # HTML 프레젠테이션 생성
+│   └── configs-for-configs/          # 로컬 개발 도구 설정 재구성
 ├── templates/                        # 새 플러그인 템플릿
 ├── AGENTS.md                         # Claude/Codex 공용 컨텍스트 (CLAUDE.md가 import)
 └── PRINCIPLES.md                     # 작업 결과물 원칙
@@ -67,6 +68,7 @@ codex plugin marketplace upgrade claude-toymarket
 | matryoshka-plugin | 플러그인/컴포넌트 생성 도구 | skill-creator, agent-creator |
 | mcp-manager | MCP 서버 자동 관리 | 세션 시작 시 MCP 상태 체크 |
 | ppt-designer | HTML 프레젠테이션 생성 | ppt-designer |
+| configs-for-configs | 로컬 개발 도구 설정 재구성 | setup-claudia-statusline-with-pr-link |
 
 ## 사용 예시
 
