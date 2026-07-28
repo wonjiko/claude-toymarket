@@ -41,6 +41,12 @@
       "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드",
       "source": "./plugins/pick-subagent",
       "category": "utility"
+    },
+    {
+      "name": "configs-for-configs",
+      "description": "로컬 개발 도구 설정을 재현 가능한 스크립트로 재구성하는 skill 모음",
+      "source": "./plugins/configs-for-configs",
+      "category": "utility"
     }
   ]
 }

@@ -50,6 +50,7 @@ claude-toymarket/
 | ppt-designer | HTML 프레젠테이션 생성 | ppt-designer |
 | pick-subagent | 서브에이전트 활용 도구 모음 | /sub-opus, /sub-sonnet, /sub-haiku, /sub-fable, subagent-loop |
 | dice | 결정장애를 위한 주사위 | /dice |
+| configs-for-configs | 로컬 개발 도구 설정 재구성 | setup-claudia-statusline-with-pr-link |
 
 ## 개발
 
