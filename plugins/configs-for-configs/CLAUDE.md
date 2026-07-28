@@ -23,13 +23,17 @@ configs-for-configs/
 └── skills/
     ├── setup-claudia-statusline-with-pr-link/
     │   ├── SKILL.md
-    │   └── scripts/statusline-pr-wrapper.sh      # 설치할 wrapper 스크립트 원본
+    │   └── scripts/
+    │       ├── statusline-orchestrator.sh          # 오케스트레이터 (양쪽 skill에 동일하게 존재)
+    │       └── statusline-segment-pr-link.sh        # 켜고 끌 수 있는 segment
     └── setup-claudia-statusline-with-notion-link/
         ├── SKILL.md
-        └── scripts/statusline-notion-wrapper.sh  # 설치할 wrapper 스크립트 원본
+        └── scripts/
+            ├── statusline-orchestrator.sh           # 오케스트레이터 (양쪽 skill에 동일하게 존재)
+            └── statusline-segment-notion-link.sh    # 켜고 끌 수 있는 segment
 ```
 
-두 skill 모두 같은 `statusLine.command` 바이너리 경로를 감싼다. 동시에 설치하면 나중 것이 앞선 wrapper를 덮어쓴다 — 각 skill의 "언제 쓰면 안 되는지" 참고.
+claudia-statusline용 skill들은 원본 바이너리를 직접 감싸지 않고, 공통 오케스트레이터 하나를 그 자리에 설치한 뒤 각자의 segment 스크립트를 `<command>-segments/`에 떨어뜨린다. 오케스트레이터는 원본을 실행하고 나서 그 디렉터리 안의 실행 가능한 `*.sh`를 전부 돌려 출력을 덧붙인다 — segment는 서로 다른 파일이라 독립적으로 설치/제거되고, `chmod -x`/`chmod +x`로 끄고 켤 수 있다. 오케스트레이터 스크립트는 두 skill 디렉터리에 각각 동일한 사본을 둔다 — 어느 skill을 먼저 설치해도 그 skill 혼자 완결되게 하기 위해서다(오케스트레이터가 stateless라 어느 쪽이 설치하든 결과가 같다).
 
 ## 레퍼런스
 
