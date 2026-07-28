@@ -21,10 +21,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 configs-for-configs/
 ├── .claude-plugin/plugin.json   # 플러그인 메타데이터
 └── skills/
-    └── setup-claudia-statusline-with-pr-link/
+    ├── setup-claudia-statusline-with-pr-link/
+    │   ├── SKILL.md
+    │   └── scripts/statusline-pr-wrapper.sh      # 설치할 wrapper 스크립트 원본
+    └── setup-claudia-statusline-with-notion-link/
         ├── SKILL.md
-        └── scripts/statusline-pr-wrapper.sh   # 설치할 wrapper 스크립트 원본
+        └── scripts/statusline-notion-wrapper.sh  # 설치할 wrapper 스크립트 원본
 ```
+
+두 skill 모두 같은 `statusLine.command` 바이너리 경로를 감싼다. 동시에 설치하면 나중 것이 앞선 wrapper를 덮어쓴다 — 각 skill의 "언제 쓰면 안 되는지" 참고.
 
 ## 레퍼런스
 
