@@ -1,7 +1,7 @@
 ---
 name: project-check
 description: "This skill should be used when the user wants to \"check project health\", \"run checklist\", \"validate project\", \"프로젝트 점검\", \"헬스체크\", \"정합성 검사\", \"체크리스트 돌려줘\", or needs to verify that the toymarket plugin marketplace repository is in a consistent state. Checks marketplace.json registration, AGENTS.md sync, component frontmatter validity, and lint pass."
-version: 0.1.0
+version: 0.2.0
 ---
 
 # Project Check
@@ -25,10 +25,13 @@ CHECKLIST.md 기반으로 toymarket 저장소 정합성을 자동 검증한다.
 
 ### 3. 컴포넌트 유효성
 
-1. 모든 `plugins/*/skills/*/SKILL.md` — name, description, version frontmatter 존재 확인
-2. 모든 skill의 name이 kebab-case인지 확인 (`^[a-z0-9]+(-[a-z0-9]+)*$`, 대문자/스페이스 불가)
-3. 모든 `plugins/*/agents/*.md` — name, description frontmatter 존재 확인
-4. 모든 `plugins/*/commands/*.md` — 파일 비어있지 않은지 확인
+```bash
+python3 scripts/verify_repo.py --profile dual
+```
+
+skill, agent, command의 frontmatter를 검사한다. YAML 파싱 여부, name과 description 존재, kebab-case, 빈 command 파일이 대상이다.
+
+frontmatter를 눈으로 읽어 판정하지 않는다. 필드 이름이 다 보여도 YAML 파싱은 실패할 수 있고, 그 파일은 런타임에 로드되지 않는다. 스크립트 결과만 근거로 쓴다.
 
 ### 4. 린트
 

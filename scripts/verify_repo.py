@@ -8,6 +8,12 @@ import stat
 import sys
 from pathlib import Path
 
+# optional: every other check still runs without pyyaml installed
+try:
+    import yaml
+except ImportError:
+    yaml = None
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATH = REPO_ROOT / "catalog" / "toymarket.json"
@@ -276,12 +282,26 @@ def parse_frontmatter(path, reporter):
     except ValueError:
         reporter.error("E301", f"missing frontmatter end: {rel(path)}")
         return {}
-    fields = {}
-    for line in lines[1:end]:
-        if ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        fields[key.strip()] = value.strip().strip('"')
+    block = "\n".join(lines[1:end])
+    if yaml is None:
+        fields = {}
+        for line in lines[1:end]:
+            if ":" not in line:
+                continue
+            key, value = line.split(":", 1)
+            fields[key.strip()] = value.strip().strip('"')
+        return fields
+    try:
+        fields = yaml.safe_load(block)
+    except yaml.YAMLError as exc:
+        detail = " ".join(str(exc).split())
+        reporter.error("E302", f"frontmatter is not valid yaml: {rel(path)}: {detail}")
+        return {}
+    if fields is None:
+        fields = {}
+    if not isinstance(fields, dict):
+        reporter.error("E303", f"frontmatter is not a mapping: {rel(path)}")
+        return {}
     return fields
 
 
@@ -289,7 +309,7 @@ def validate_skills(reporter):
     skill_paths = sorted((REPO_ROOT / "plugins").glob("*/skills/*/SKILL.md"))
     for path in skill_paths:
         fields = parse_frontmatter(path, reporter)
-        name = fields.get("name", "")
+        name = str(fields.get("name") or "")
         if not name:
             reporter.error("E310", f"skill missing name: {rel(path)}")
         elif not KEBAB_RE.match(name):
@@ -301,6 +321,22 @@ def validate_skills(reporter):
         if not fields.get("version"):
             reporter.warn("W310", f"skill missing version: {rel(path)}")
     reporter.add_ok("S300", f"skill files checked: {len(skill_paths)}")
+
+
+def validate_agents(reporter):
+    agent_paths = sorted((REPO_ROOT / "plugins").glob("*/agents/*.md"))
+    for path in agent_paths:
+        fields = parse_frontmatter(path, reporter)
+        name = str(fields.get("name") or "")
+        if not name:
+            reporter.error("E320", f"agent missing name: {rel(path)}")
+        elif not KEBAB_RE.match(name):
+            reporter.error("E321", f"agent name must be kebab-case: {rel(path)}: {name}")
+        elif path.stem != name:
+            reporter.error("E322", f"agent file/name mismatch: {rel(path)}: {name}")
+        if not fields.get("description"):
+            reporter.error("E323", f"agent missing description: {rel(path)}")
+    reporter.add_ok("S310", f"agent files checked: {len(agent_paths)}")
 
 
 def validate_commands(reporter):
@@ -381,9 +417,13 @@ def main():
         reporter.print(args.quiet)
         return 1
 
+    if yaml is None:
+        reporter.warn("W302", "pyyaml missing: frontmatter yaml validity not checked")
+
     plugins = validate_source_schema(source, reporter)
     validate_plugin_dirs(plugins, reporter)
     validate_skills(reporter)
+    validate_agents(reporter)
     validate_commands(reporter)
     if args.full:
         validate_scripts(reporter)
