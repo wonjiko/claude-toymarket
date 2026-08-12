@@ -1,6 +1,6 @@
 {
   "name": "matryoshka-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "플러그인 컴포넌트를 만드는 플러그인 - skill, agent 생성기",
   "author": {
     "name": "pulp"
