@@ -47,6 +47,12 @@
       "description": "로컬 개발 도구 설정을 재현 가능한 스크립트로 재구성하는 skill 모음",
       "source": "./plugins/configs-for-configs",
       "category": "utility"
+    },
+    {
+      "name": "meissa-fe-workflow",
+      "description": "Meissa 프로덕트팀 노션 업무 카드 생성 skill 모음",
+      "source": "./plugins/meissa-fe-workflow",
+      "category": "productivity"
     }
   ]
 }

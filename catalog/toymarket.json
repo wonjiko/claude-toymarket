@@ -209,6 +209,35 @@
           ]
         }
       }
+    },
+    {
+      "name": "meissa-fe-workflow",
+      "description": "Meissa 프로덕트팀 노션 업무 카드 생성 skill 모음",
+      "version": "0.1.0",
+      "author": {
+        "name": "pulp"
+      },
+      "claude": {
+        "category": "productivity"
+      },
+      "codex": {
+        "category": "Productivity",
+        "status": "claude-only",
+        "interface": {
+          "displayName": "Meissa FE Workflow",
+          "shortDescription": "Create Meissa Notion task cards",
+          "longDescription": "Create FE task cards and epic cards in the Meissa ProductTeam Card Table, matching the current Notion template structure and the requester's own writing style.",
+          "developerName": "pulp",
+          "category": "Productivity",
+          "capabilities": [
+            "Interactive",
+            "Write"
+          ],
+          "defaultPrompt": [
+            "FE 업무 카드 만들어줘"
+          ]
+        }
+      }
     }
   ]
 }
