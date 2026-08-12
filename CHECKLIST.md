@@ -13,6 +13,7 @@
 
 ## 3. 컴포넌트 유효성
 
+- [ ] 모든 `skills/*/SKILL.md`, `agents/*.md`, `commands/*.md` — frontmatter가 유효한 YAML로 파싱됨
 - [ ] 모든 `skills/*/SKILL.md` — name, description, version frontmatter 존재
 - [ ] 모든 `skills/*/SKILL.md` — name이 kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`)
 - [ ] 모든 `agents/*.md` — name, description frontmatter 존재
