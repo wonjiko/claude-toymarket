@@ -1,33 +1,34 @@
 ---
 name: agent-creator
-description: Use this agent when the user wants to "create an agent", "make a new agent", "build an agent that...", or describes autonomous task functionality they need.
+description: |
+  Use this agent when the user wants to "create an agent", "make a new agent", "build an agent that...", or describes autonomous task functionality they need.
 
-<example>
-Context: User wants to create a code review agent
-user: "코드 리뷰하는 agent 만들어줘"
-assistant: "agent-creator agent를 사용해서 코드 리뷰 agent를 생성하겠습니다."
-<commentary>
-User requesting agent creation, trigger agent-creator.
-</commentary>
-</example>
+  <example>
+  Context: User wants to create a code review agent
+  user: "코드 리뷰하는 agent 만들어줘"
+  assistant: "agent-creator agent를 사용해서 코드 리뷰 agent를 생성하겠습니다."
+  <commentary>
+  User requesting agent creation, trigger agent-creator.
+  </commentary>
+  </example>
 
-<example>
-Context: User describes agent functionality
-user: "테스트 자동 생성하는 agent가 필요해"
-assistant: "agent-creator를 사용해서 테스트 생성 agent를 만들겠습니다."
-<commentary>
-User describes agent need, trigger agent-creator.
-</commentary>
-</example>
+  <example>
+  Context: User describes agent functionality
+  user: "테스트 자동 생성하는 agent가 필요해"
+  assistant: "agent-creator를 사용해서 테스트 생성 agent를 만들겠습니다."
+  <commentary>
+  User describes agent need, trigger agent-creator.
+  </commentary>
+  </example>
 
-<example>
-Context: User wants proactive agent behavior
-user: "빌드 실패하면 자동으로 분석해주는 agent"
-assistant: "agent-creator로 빌드 실패 분석 agent를 만들겠습니다."
-<commentary>
-User wants automated/proactive agent, trigger agent-creator.
-</commentary>
-</example>
+  <example>
+  Context: User wants proactive agent behavior
+  user: "빌드 실패하면 자동으로 분석해주는 agent"
+  assistant: "agent-creator로 빌드 실패 분석 agent를 만들겠습니다."
+  <commentary>
+  User wants automated/proactive agent, trigger agent-creator.
+  </commentary>
+  </example>
 
 model: sonnet
 tools: ["Read", "Write", "Glob"]
@@ -109,16 +110,17 @@ assistant: "[응답]"
 ```markdown
 ---
 name: [identifier]
-description: Use this agent when [트리거 조건]...
+description: |
+  Use this agent when [트리거 조건]...
 
-<example>
-Context: [상황]
-user: "[메시지]"
-assistant: "[응답]"
-<commentary>
-[트리거 이유]
-</commentary>
-</example>
+  <example>
+  Context: [상황]
+  user: "[메시지]"
+  assistant: "[응답]"
+  <commentary>
+  [트리거 이유]
+  </commentary>
+  </example>
 
 model: [inherit|sonnet|haiku]
 tools: ["Tool1", "Tool2"]
@@ -131,6 +133,7 @@ tools: ["Tool1", "Tool2"]
 
 생성된 파일 검증:
 - [ ] frontmatter가 `---`로 시작하고 끝나는지
+- [ ] frontmatter가 유효한 YAML로 파싱되는지
 - [ ] `name` 필드가 존재하고 lowercase-hyphens 형식인지
 - [ ] `description`이 "Use this agent when"으로 시작하는지
 - [ ] 최소 2개 이상의 `<example>` 블록이 있는지

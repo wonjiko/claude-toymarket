@@ -53,15 +53,6 @@ lint_file() {
   # description field
   local desc
   desc=$(grep -m1 "^description:" "$file" || true)
-  if [[ -z "$desc" ]]; then
-    echo -e "${RED}x missing 'description' field${NC}"
-    errors=$((errors + 1))
-  elif ! echo "$desc" | grep -q "Use this agent when"; then
-    echo -e "${YELLOW}! description should start with 'Use this agent when'${NC}"
-    warnings=$((warnings + 1))
-  else
-    echo -e "${GREEN}v description format OK${NC}"
-  fi
 
   # extract frontmatter content (between first and second ---)
   local frontmatter
@@ -69,6 +60,17 @@ lint_file() {
     frontmatter=$(sed -n "2,$((fm_end - 1))p" "$file")
   else
     frontmatter=""
+  fi
+
+  # search the whole frontmatter: a block scalar puts the text on later lines
+  if [[ -z "$desc" ]]; then
+    echo -e "${RED}x missing 'description' field${NC}"
+    errors=$((errors + 1))
+  elif ! echo "$frontmatter" | grep -q "Use this agent when"; then
+    echo -e "${YELLOW}! description should start with 'Use this agent when'${NC}"
+    warnings=$((warnings + 1))
+  else
+    echo -e "${GREEN}v description format OK${NC}"
   fi
 
   # example blocks count (in frontmatter only)
