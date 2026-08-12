@@ -13,11 +13,13 @@
 
 ## 3. 컴포넌트 유효성
 
-- [ ] 모든 `skills/*/SKILL.md`, `agents/*.md`, `commands/*.md` — frontmatter가 유효한 YAML로 파싱됨
-- [ ] 모든 `skills/*/SKILL.md` — name, description, version frontmatter 존재
-- [ ] 모든 `skills/*/SKILL.md` — name이 kebab-case (`^[a-z0-9]+(-[a-z0-9]+)*$`)
-- [ ] 모든 `agents/*.md` — name, description frontmatter 존재
-- [ ] 모든 `commands/*.md` — 파일 비어있지 않음
+`skills/*/SKILL.md`, `agents/*.md`, `commands/*.md`의 frontmatter를 검사한다.
+
+```bash
+python3 scripts/verify_repo.py --profile dual
+```
+
+- [ ] 에러 없이 통과
 
 ## 4. 린트
 
