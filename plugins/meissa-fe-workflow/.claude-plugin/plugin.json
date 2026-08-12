@@ -1,0 +1,8 @@
+{
+  "name": "meissa-fe-workflow",
+  "description": "Meissa 프로덕트팀 노션 업무 카드 생성 skill 모음",
+  "version": "0.1.0",
+  "author": {
+    "name": "pulp"
+  }
+}
