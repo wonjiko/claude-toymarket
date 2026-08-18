@@ -17,6 +17,7 @@ jupiter GitHub 릴리즈마다 어떤 carta-core, pix4d-core 버전이 실렸는
 - jupiter가 아닌 저장소. 변수명과 `app/core/config.py` 경로가 고정되어 있다
 - 어느 버전을 올릴지 판단하는 일. 이 skill은 과거 기록만 읽는다
 - `gh` 인증이 없는 환경. 릴리즈 목록을 GitHub API로 가져온다
+- macOS나 GNU coreutils가 없는 환경. 날짜 변환에 `date`를 쓴다
 
 ## 절차
 
@@ -26,11 +27,23 @@ jupiter GitHub 릴리즈마다 어떤 carta-core, pix4d-core 버전이 실렸는
 
 ### 2. 수집
 
+스크립트는 이 skill 디렉터리 기준 `../../scripts/`에 있다. jupiter 경로는 인자로 넘기므로 어느 디렉터리에서 실행하든 상관없다.
+
 ```bash
-../../scripts/jupiter-engine-versions.sh <jupiter 경로>
+<skill 디렉터리>/../../scripts/jupiter-engine-versions.sh <jupiter 경로>
 ```
 
-TSV를 반환한다. 컬럼은 tag, published_kst, carta_core, pix4d_core, changed다. `changed`는 직전 릴리즈 대비 어느 엔진이 바뀌었는지고, 값이 `2.1.1|2.0.9` 형태면 PROD와 STAGING 프로필 값이 다르다는 뜻이다.
+TSV를 반환한다. 컬럼은 tag, published_kst, carta_core, pix4d_core, changed다.
+
+| 값 | 뜻 |
+|---|---|
+| `changed` = `기준` | 첫 행. 비교 대상이 없다 |
+| `changed` = `-` | 직전 릴리즈와 두 엔진 모두 같다 |
+| 버전 = `2.1.1/2.0.9` | PRODUCTION과 STAGING 프로필 값이 다르다 |
+| 버전 = `?` | 해당 태그에서 config 파일을 읽지 못했다 |
+| 버전 = `-` | config는 읽었으나 변수를 찾지 못했다 |
+
+stderr에 릴리즈 상한 경고가 나오면 더 오래된 릴리즈가 잘렸다는 뜻이므로, 두 번째 인자로 상한을 올려 다시 수집한다.
 
 ### 3. 표
 
@@ -45,11 +58,11 @@ TSV를 반환한다. 컬럼은 tag, published_kst, carta_core, pix4d_core, chang
 
 그다음 표에서 실제로 읽히는 것만 관찰로 적는다. 없으면 적지 않는다.
 
-- 릴리즈에 실리지 않고 건너뛴 엔진 버전. 엔진 저장소에는 릴리즈가 있는데 jupiter 표에 한 번도 안 나타난 값이다
+- 릴리즈에 실리지 않고 건너뛴 엔진 버전. 엔진 저장소에는 릴리즈가 있는데 jupiter 표에 한 번도 안 나타난 값이다. 상한 경고가 떴다면 이 관찰은 적지 않는다
 - 버전이 내려간 구간. 하루에 릴리즈를 여러 번 낸 경우가 대개 여기 해당한다
 - 엔진 버전이 그대로인 릴리즈가 몇 건인지
-- PROD와 STAGING 값이 갈린 구간
+- PRODUCTION과 STAGING 값이 갈린 구간
 
 ## 주의
 
-`git show <tag>:app/core/config.py`가 비면 해당 릴리즈 태그가 로컬에 없거나 파일 경로가 그 시점에 달랐다는 뜻이다. 표에 `?`로 나온다. 값을 지어내지 말고 `?`인 채로 두고 사용자에게 알린다.
+`?`나 `-`가 나온 행은 값을 지어내지 말고 그대로 두고 사용자에게 알린다. 태그가 로컬에 없거나, config 경로가 그 시점에 달랐거나, 프로필 분기 구조가 바뀌었다는 신호다. 셋 다 표를 못 믿는다는 뜻이므로 요약에서 그 구간을 근거로 삼지 않는다.
