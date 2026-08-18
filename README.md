@@ -1,6 +1,6 @@
 # claude-toymarket
 
-개인용 Claude Code / Codex 하이브리드 플러그인 장터.
+개인용 Claude Code / Codex / Cursor 하이브리드 플러그인 장터.
 실험적이고, 손으로 만들고, 한 사람이 관리함.
 
 ## 원칙
@@ -16,6 +16,7 @@
 ```
 claude-toymarket/
 ├── .claude-plugin/marketplace.json   # 플러그인 카탈로그
+├── .cursor-plugin/marketplace.json   # Cursor 플러그인 카탈로그
 ├── .agents/plugins/marketplace.json  # Codex 플러그인 카탈로그
 ├── plugins/                          # 플러그인 모음
 │   ├── dice/                         # 결정장애를 위한 주사위
@@ -25,7 +26,7 @@ claude-toymarket/
 │   ├── ppt-designer/                 # HTML 프레젠테이션 생성
 │   └── configs-for-configs/          # 로컬 개발 도구 설정 재구성
 ├── templates/                        # 새 플러그인 템플릿
-├── AGENTS.md                         # Claude/Codex 공용 컨텍스트 (CLAUDE.md가 import)
+├── AGENTS.md                         # 공용 컨텍스트 (CLAUDE.md가 import)
 └── PRINCIPLES.md                     # 작업 결과물 원칙
 ```
 
@@ -36,6 +37,19 @@ claude-toymarket/
 3. `wonjiko/claude-toymarket` 입력
 
 끝.
+
+## Cursor 등록
+
+팀 마켓플레이스로 GitHub 레포를 가져온다.
+
+1. Cursor **Dashboard → Plugins → Add Marketplace**
+2. **Import from Repo**에서 `wonjiko/claude-toymarket` 입력
+
+로컬에서 플러그인 하나만 시험하려면:
+
+```bash
+ln -s /path/to/claude-toymarket/plugins/dice ~/.cursor/plugins/local/dice
+```
 
 ## Codex 등록
 
@@ -87,16 +101,16 @@ codex plugin marketplace upgrade claude-toymarket
 
 1. `plugins/[name]/` 아래에 폴더 생성, 실제 컴포넌트(commands/skills/agents/hooks) 작성
 2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, claude.category, codex.category, codex.status 등)
-3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `.claude-plugin/marketplace.json`, `plugins/[name]/.claude-plugin/plugin.json` 등 생성 파일을 만든다. 이 파일들은 손으로 직접 쓰지 않는다
+3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `.claude-plugin/marketplace.json`, `.cursor-plugin/marketplace.json`, `plugins/[name]/.claude-plugin/plugin.json`, `plugins/[name]/.cursor-plugin/plugin.json` 등 생성 파일을 만든다. 이 파일들은 손으로 직접 쓰지 않는다
 
 ## Codex 호환성
 
-이 저장소는 Claude Code와 Codex 양쪽에서 쓰는 하이브리드 마켓플레이스를 목표로 한다.
+이 저장소는 Claude Code, Codex, Cursor에서 쓰는 하이브리드 마켓플레이스를 목표로 한다.
 
 - 설계 기록: `docs/dual-runtime-architecture.md`
 - Codex 체크리스트: `CHECKLIST.codex.md`
 - Claude 검증: `python3 scripts/verify_repo.py --profile claude --full`
-- Codex/dual 검증: `python3 scripts/verify_repo.py --profile dual`
+- Cursor/Codex 검증: `python3 scripts/verify_repo.py --profile dual`
 
 ## 면책
 

@@ -1,0 +1,53 @@
+{
+  "name": "claude-toymarket",
+  "displayName": "Toymarket",
+  "owner": {
+    "name": "wonjiko"
+  },
+  "metadata": {
+    "description": "개인용 Claude Code / Codex / Cursor 하이브리드 플러그인 장터",
+    "pluginRoot": "plugins"
+  },
+  "plugins": [
+    {
+      "name": "dice",
+      "source": "dice",
+      "description": "결정장애를 위한 주사위"
+    },
+    {
+      "name": "matryoshka-plugin",
+      "source": "matryoshka-plugin",
+      "description": "플러그인 컴포넌트를 만드는 플러그인 - skill, agent 생성기"
+    },
+    {
+      "name": "skills-toybox",
+      "source": "skills-toybox",
+      "description": "범용 유틸리티 skill 모음"
+    },
+    {
+      "name": "mcp-manager",
+      "source": "mcp-manager",
+      "description": "MCP 서버 자동 연결 및 헬스체크. 세션 시작 시 MCP 상태 확인 후 문제 발견 시 자동 수정 시도."
+    },
+    {
+      "name": "ppt-designer",
+      "source": "ppt-designer",
+      "description": "topic-outline.md를 기반으로 HTML 프레젠테이션을 생성하는 플러그인"
+    },
+    {
+      "name": "pick-subagent",
+      "source": "pick-subagent",
+      "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드"
+    },
+    {
+      "name": "configs-for-configs",
+      "source": "configs-for-configs",
+      "description": "로컬 개발 도구 설정을 재현 가능한 스크립트로 재구성하는 skill 모음"
+    },
+    {
+      "name": "meissa-fe-workflow",
+      "source": "meissa-fe-workflow",
+      "description": "Meissa 프로덕트팀 노션 업무 카드 생성과 jupiter 엔진 버전 조회 skill 모음"
+    }
+  ]
+}

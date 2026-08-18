@@ -2,8 +2,8 @@
 
 ## 1. 마켓플레이스 정합성
 
-- [ ] `marketplace.json`의 모든 플러그인 → `plugins/[name]/.claude-plugin/plugin.json` 존재
-- [ ] `plugins/` 하위 모든 디렉토리 → `marketplace.json`에 등록됨
+- [ ] `catalog/toymarket.json`의 모든 플러그인 → `plugins/[name]/.claude-plugin/plugin.json`과 `plugins/[name]/.cursor-plugin/plugin.json` 존재
+- [ ] `plugins/` 하위 모든 디렉토리 → `catalog/toymarket.json`에 등록됨
 - [ ] `plugins/` 하위에 빈 디렉토리(plugin.json 없는) 없음
 
 ## 2. AGENTS.md 정합성

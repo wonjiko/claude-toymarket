@@ -1,0 +1,8 @@
+{
+  "name": "skills-toybox",
+  "description": "범용 유틸리티 skill 모음",
+  "version": "1.0.0",
+  "author": {
+    "name": "pulp"
+  }
+}
