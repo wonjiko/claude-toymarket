@@ -110,7 +110,7 @@ codex plugin marketplace upgrade claude-toymarket
 - 설계 기록: `docs/dual-runtime-architecture.md`
 - Codex 체크리스트: `CHECKLIST.codex.md`
 - Claude 검증: `python3 scripts/verify_repo.py --profile claude --full`
-- Codex/dual 검증: `python3 scripts/verify_repo.py --profile dual`
+- Cursor/Codex 검증: `python3 scripts/verify_repo.py --profile dual`
 
 ## 면책
 

@@ -154,12 +154,12 @@ def expected_cursor_plugin(plugin):
         "version": plugin["version"],
         "author": plugin["author"],
     }
-    mcp_path = plugin_dir(name) / ".mcp.json"
+    mcp_path = plugin_dir(name) / "mcp.json"
     if mcp_path.exists():
-        manifest["mcpServers"] = "./.mcp.json"
+        manifest["mcpServers"] = "./mcp.json"
     if hook_config_path(name) is not None:
         # Claude hook schema is not Cursor-compatible; skip auto-discovery.
-        manifest["hooks"] = {"hooks": {}}
+        manifest["hooks"] = {}
     return manifest
 
 
@@ -244,7 +244,7 @@ def validate_source_schema(source, reporter):
             reporter.error("E100", f"source missing top-level field: {field}")
     cursor = source.get("cursor")
     if not isinstance(cursor, dict) or not cursor.get("displayName"):
-        reporter.error("E121", "source cursor.displayName is required")
+        reporter.error("E102", "source cursor.displayName is required")
     if not isinstance(source.get("plugins"), list):
         reporter.error("E101", "source plugins must be a list")
         return []
@@ -488,8 +488,8 @@ def main():
     if args.full:
         validate_scripts(reporter)
     validate_claude(source, reporter, fix=args.fix)
-    validate_cursor(source, reporter, fix=args.fix)
     if args.profile == "dual":
+        validate_cursor(source, reporter, fix=args.fix)
         validate_dual(source, reporter, fix=args.fix)
 
     reporter.print(args.quiet)

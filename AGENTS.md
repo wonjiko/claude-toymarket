@@ -35,7 +35,7 @@ claude-toymarket/
 │       ├── commands/                 # slash commands (*.md, Claude/Cursor)
 │       ├── agents/                   # 에이전트 정의 (*.md, Claude/Cursor)
 │       ├── skills/                   # AI skills (*/SKILL.md, 공유)
-│       └── hooks/                    # hooks.json + shell scripts (공유)
+│       └── hooks/                    # Claude hooks.json + 공용 shell scripts
 ├── templates/                        # 새 플러그인 템플릿
 ├── AGENTS.md                         # Claude/Codex/Cursor 공용 컨텍스트
 ├── CLAUDE.md                         # @AGENTS.md import
@@ -82,13 +82,13 @@ Anthropic 공식 소스만 참고:
 
 ## Verification
 
-Run the current Claude/Cursor structural check:
+Run the current Claude structural check:
 
 ```bash
 python3 scripts/verify_repo.py --profile claude --full
 ```
 
-Run the dual-runtime gate:
+Run the dual-runtime gate (Claude + Cursor + Codex):
 
 ```bash
 python3 scripts/verify_repo.py --profile dual
@@ -126,22 +126,10 @@ codex plugin marketplace upgrade claude-toymarket
 
 Local path marketplaces are not Git marketplaces, so `upgrade` does not apply to them.
 
-## Cursor Registration
-
-Import this GitHub repo as a Cursor team marketplace:
-
-1. Cursor Dashboard → Plugins → Add Marketplace
-2. Import from Repo: `wonjiko/claude-toymarket`
-
-Local plugin smoke test:
-
-```bash
-ln -s /path/to/claude-toymarket/plugins/dice ~/.cursor/plugins/local/dice
-```
-
 ## Editing Rules
 
 - Treat `catalog/toymarket.json` as the source for marketplace and plugin manifest metadata.
-- Keep shared behavior in `skills/`, `hooks/`, `references/`, `assets/`, and scripts.
+- Keep shared behavior in `skills/`, `hooks/*.sh`, `references/`, `assets/`, and scripts.
 - Treat `commands/*.md` as Claude adapters. Cursor also reads `commands/` and `agents/`.
+- Treat `hooks/hooks.json` as Claude-only. Cursor manifests use empty `hooks` so that file is not auto-discovered.
 - Keep generated Claude/Cursor/Codex manifest files in sync with `scripts/verify_repo.py --fix` rather than hand-editing them.

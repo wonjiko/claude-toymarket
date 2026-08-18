@@ -40,7 +40,7 @@ Codex generated targets:
 - `.agents/plugins/marketplace.json`
 - `plugins/<plugin>/.codex-plugin/plugin.json`
 
-Claude와 Cursor target은 `--profile claude`에서도 검사한다. Codex target은 `--profile dual`에서 검사한다.
+Claude target은 `--profile claude`에서 검사한다. Cursor와 Codex target은 `--profile dual`에서 검사한다.
 
 ## Shared Components
 
@@ -61,7 +61,7 @@ Claude와 Cursor target은 `--profile claude`에서도 검사한다. Codex targe
 
 Codex에는 Claude의 `commands/`와 1:1로 같은 개념이 없다. 따라서 command 성격의 기능은 Codex에서는 skill, hook, MCP/app capability 중 하나로 명시적으로 재분류한다.
 
-Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으면 Cursor manifest는 빈 `hooks`를 넣어 auto-discovery를 막는다. MCP config가 `.mcp.json`이면 Cursor manifest가 그 경로를 `mcpServers`로 가리킨다.
+Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으면 Cursor manifest는 빈 `hooks` 객체를 넣어 auto-discovery를 막는다. Claude `.mcp.json`은 Cursor `mcp.json`과 스키마가 달라서 Cursor manifest에 연결하지 않는다.
 
 ## Verification Model
 
@@ -71,10 +71,10 @@ Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으�
 
 1. `catalog/toymarket.json`을 읽고 schema를 검사한다.
 2. `plugins/` 실제 디렉토리와 source plugin 목록을 대조한다.
-3. Claude/Cursor marketplace와 plugin manifest를 source에서 다시 렌더링한다.
+3. Claude marketplace와 plugin manifest를 source에서 다시 렌더링한다.
 4. 실제 generated file과 byte-for-byte로 비교한다.
 5. skill frontmatter와 command adapter 기본 구조를 검사한다.
-6. `--profile dual`에서는 Codex marketplace와 manifest까지 같은 방식으로 검사한다.
+6. `--profile dual`에서는 Cursor와 Codex marketplace/manifest까지 같은 방식으로 검사한다.
 
 검사기는 파일 수정시각, 랜덤값, 네트워크, 외부 패키지를 사용하지 않는다.
 
@@ -98,5 +98,5 @@ Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으�
 
 1. `catalog/toymarket.json` 또는 공용 component를 수정한다.
 2. 필요한 generated file을 갱신한다.
-3. `python3 scripts/verify_repo.py --profile claude`로 Claude/Cursor 구조를 검사한다.
-4. Codex 이식 단계에서는 `python3 scripts/verify_repo.py --profile dual`을 통과시킨다.
+3. `python3 scripts/verify_repo.py --profile claude`로 Claude 구조를 검사한다.
+4. Cursor/Codex 이식 단계에서는 `python3 scripts/verify_repo.py --profile dual`을 통과시킨다.

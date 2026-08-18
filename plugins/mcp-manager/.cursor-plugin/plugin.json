@@ -5,8 +5,5 @@
   "author": {
     "name": "pulp"
   },
-  "mcpServers": "./.mcp.json",
-  "hooks": {
-    "hooks": {}
-  }
+  "hooks": {}
 }
