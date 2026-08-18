@@ -124,6 +124,45 @@ def expected_claude_plugin(plugin):
     }
 
 
+def expected_cursor_marketplace(source):
+    return {
+        "name": source["name"],
+        "displayName": source["cursor"]["displayName"],
+        "owner": source["owner"],
+        "metadata": {
+            "description": source["description"],
+            "pluginRoot": "plugins",
+        },
+        "plugins": [
+            {
+                "name": plugin["name"],
+                "source": plugin["name"],
+                "description": plugin.get("claude", {}).get(
+                    "marketplaceDescription", plugin["description"]
+                ),
+            }
+            for plugin in source["plugins"]
+        ],
+    }
+
+
+def expected_cursor_plugin(plugin):
+    name = plugin["name"]
+    manifest = {
+        "name": name,
+        "description": plugin["description"],
+        "version": plugin["version"],
+        "author": plugin["author"],
+    }
+    mcp_path = plugin_dir(name) / ".mcp.json"
+    if mcp_path.exists():
+        manifest["mcpServers"] = "./.mcp.json"
+    if hook_config_path(name) is not None:
+        # Claude hook schema is not Cursor-compatible; skip auto-discovery.
+        manifest["hooks"] = {"hooks": {}}
+    return manifest
+
+
 def expected_codex_marketplace(source):
     return {
         "name": source["name"],
@@ -199,10 +238,13 @@ def compare_generated(path, expected, reporter, code, fix=False):
 
 
 def validate_source_schema(source, reporter):
-    required_top = ["name", "description", "owner", "codex", "plugins"]
+    required_top = ["name", "description", "owner", "codex", "cursor", "plugins"]
     for field in required_top:
         if field not in source:
             reporter.error("E100", f"source missing top-level field: {field}")
+    cursor = source.get("cursor")
+    if not isinstance(cursor, dict) or not cursor.get("displayName"):
+        reporter.error("E121", "source cursor.displayName is required")
     if not isinstance(source.get("plugins"), list):
         reporter.error("E101", "source plugins must be a list")
         return []
@@ -379,6 +421,24 @@ def validate_claude(source, reporter, fix=False):
         )
 
 
+def validate_cursor(source, reporter, fix=False):
+    compare_generated(
+        REPO_ROOT / ".cursor-plugin" / "marketplace.json",
+        expected_cursor_marketplace(source),
+        reporter,
+        "S810",
+        fix,
+    )
+    for plugin in source["plugins"]:
+        compare_generated(
+            plugin_dir(plugin["name"]) / ".cursor-plugin" / "plugin.json",
+            expected_cursor_plugin(plugin),
+            reporter,
+            "S811",
+            fix,
+        )
+
+
 def validate_dual(source, reporter, fix=False):
     compare_generated(
         REPO_ROOT / ".agents" / "plugins" / "marketplace.json",
@@ -428,6 +488,7 @@ def main():
     if args.full:
         validate_scripts(reporter)
     validate_claude(source, reporter, fix=args.fix)
+    validate_cursor(source, reporter, fix=args.fix)
     if args.profile == "dual":
         validate_dual(source, reporter, fix=args.fix)
 

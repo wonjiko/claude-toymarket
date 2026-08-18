@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This repository is a Claude Code / Codex hybrid plugin marketplace. It is being migrated from a Claude Code-only plugin marketplace into a dual Claude/Codex plugin collection.
+This repository is a Claude Code / Codex / Cursor hybrid plugin marketplace.
 
 ## Principles
 
@@ -25,17 +25,19 @@ All work in this repo follows the principles in `PRINCIPLES.md`.
 claude-toymarket/
 ├── catalog/toymarket.json            # 공용 원본 (source of truth)
 ├── .claude-plugin/marketplace.json   # 생성된 Claude 플러그인 카탈로그
+├── .cursor-plugin/marketplace.json   # 생성된 Cursor 플러그인 카탈로그
 ├── .agents/plugins/marketplace.json  # 생성된 Codex 플러그인 카탈로그
 ├── plugins/
 │   └── [plugin-name]/                # 플러그인별로 필요한 디렉토리만 포함
 │       ├── .claude-plugin/plugin.json  # 생성된 메타데이터 (Claude)
+│       ├── .cursor-plugin/plugin.json  # 생성된 메타데이터 (Cursor)
 │       ├── .codex-plugin/plugin.json   # 생성된 메타데이터 (Codex)
-│       ├── commands/                 # slash commands (*.md, Claude 전용)
-│       ├── agents/                   # 에이전트 정의 (*.md, Claude 전용)
+│       ├── commands/                 # slash commands (*.md, Claude/Cursor)
+│       ├── agents/                   # 에이전트 정의 (*.md, Claude/Cursor)
 │       ├── skills/                   # AI skills (*/SKILL.md, 공유)
 │       └── hooks/                    # hooks.json + shell scripts (공유)
 ├── templates/                        # 새 플러그인 템플릿
-├── AGENTS.md                         # Claude/Codex 공용 컨텍스트
+├── AGENTS.md                         # Claude/Codex/Cursor 공용 컨텍스트
 ├── CLAUDE.md                         # @AGENTS.md import
 └── PRINCIPLES.md                     # 작업 결과물 원칙
 ```
@@ -59,7 +61,7 @@ claude-toymarket/
 
 1. `plugins/[name]/` 디렉토리 생성, 실제 컴포넌트(commands/skills/agents/hooks) 작성
 2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, claude.category, codex.category, codex.status 등)
-3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `catalog/toymarket.json`으로부터 `.claude-plugin/marketplace.json`, `plugins/[name]/.claude-plugin/plugin.json`, `.agents/plugins/marketplace.json`, `plugins/[name]/.codex-plugin/plugin.json`을 생성한다. 이 파일들은 손으로 직접 쓰지 않는다 (## Editing Rules 참고)
+3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `catalog/toymarket.json`으로부터 Claude/Cursor/Codex marketplace와 plugin.json을 생성한다. 이 파일들은 손으로 직접 쓰지 않는다 (## Editing Rules 참고)
 
 ### 컴포넌트 생성 (matryoshka-plugin 사용)
 
@@ -80,7 +82,7 @@ Anthropic 공식 소스만 참고:
 
 ## Verification
 
-Run the current Claude-compatible structural check:
+Run the current Claude/Cursor structural check:
 
 ```bash
 python3 scripts/verify_repo.py --profile claude --full
@@ -124,9 +126,22 @@ codex plugin marketplace upgrade claude-toymarket
 
 Local path marketplaces are not Git marketplaces, so `upgrade` does not apply to them.
 
+## Cursor Registration
+
+Import this GitHub repo as a Cursor team marketplace:
+
+1. Cursor Dashboard → Plugins → Add Marketplace
+2. Import from Repo: `wonjiko/claude-toymarket`
+
+Local plugin smoke test:
+
+```bash
+ln -s /path/to/claude-toymarket/plugins/dice ~/.cursor/plugins/local/dice
+```
+
 ## Editing Rules
 
 - Treat `catalog/toymarket.json` as the source for marketplace and plugin manifest metadata.
 - Keep shared behavior in `skills/`, `hooks/`, `references/`, `assets/`, and scripts.
-- Treat `commands/*.md` as Claude-only adapters unless a Codex equivalent is explicitly added.
-- Keep generated Claude/Codex manifest files in sync with `scripts/verify_repo.py --fix` rather than hand-editing them.
+- Treat `commands/*.md` as Claude adapters. Cursor also reads `commands/` and `agents/`.
+- Keep generated Claude/Cursor/Codex manifest files in sync with `scripts/verify_repo.py --fix` rather than hand-editing them.
