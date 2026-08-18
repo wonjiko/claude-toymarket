@@ -1,7 +1,7 @@
 {
   "name": "meissa-fe-workflow",
-  "description": "Meissa 프로덕트팀 노션 업무 카드 생성 skill 모음",
-  "version": "0.1.0",
+  "description": "Meissa 프로덕트팀 노션 업무 카드 생성과 jupiter 엔진 버전 조회 skill 모음",
+  "version": "0.2.0",
   "author": {
     "name": "pulp"
   }
