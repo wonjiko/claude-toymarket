@@ -4,33 +4,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 플러그인 개요
 
-`meissa-fe-workflow`는 Meissa 프로덕트팀의 노션 업무 카드를 만드는 skill 모음이다. 대상 데이터베이스는 `Meissa 자료실 › 프로덕트팀 › Task Tracker › ProductTeam Card Table` 하나다.
+`meissa-fe-workflow`는 Meissa 프로덕트팀 업무에 쓰는 skill 모음이다.
+
+- 노션 업무 카드 생성 — 대상 데이터베이스는 `Meissa 자료실 › 프로덕트팀 › Task Tracker › ProductTeam Card Table` 하나다
+- jupiter 엔진 버전 조회 — 릴리즈별로 어떤 carta-core, pix4d-core 버전이 실렸는지 읽는다
 
 ## 왜 존재하는지
+
+### 노션 카드 skill
 
 업무 카드는 매번 같은 골격과 같은 문체로 써야 팀이 읽을 수 있는데, 손으로 쓰면 섹션이 빠지거나 문체가 흔들린다. 두 skill은 노션에서 템플릿 구조를 읽고 요청자의 과거 카드에서 문체를 관찰해 그대로 맞춘다.
 
 **설계 원칙: 섹션 골격과 문체를 skill에 적어두지 않는다.** 노션에서 템플릿이 바뀌면 skill이 따라가야 하므로, SKILL.md에는 어디서 무엇을 읽어올지만 적는다. 고정한 것은 data source URL과 템플릿 페이지 ID뿐이다.
 
+### jupiter-engine-versions
+
+엔진 버전은 jupiter `app/core/config.py`에 문자열로 박혀 있고 릴리즈 노트에는 정리되지 않는다. 어느 릴리즈에 무엇이 실렸는지 알려면 태그를 하나씩 열어봐야 하는데, 롤백이 섞이면 버전 번호만으로 순서를 못 읽는다.
+
 ## 언제 쓰면 안 되는지
+
+노션 카드 skill:
 
 - Meissa 워크스페이스가 아닌 다른 노션 워크스페이스 (data source ID가 하드코딩되어 있다)
 - QA 버그 리포트, 기술부채 등록처럼 별도 데이터베이스와 템플릿을 쓰는 항목
 - Notion MCP 서버가 연결되지 않은 환경
+
+`jupiter-engine-versions`:
+
+- jupiter가 아닌 저장소. 변수명과 config 경로가 고정되어 있다
+- `gh` 인증이 없는 환경
 
 ## 구조
 
 ```
 meissa-fe-workflow/
 ├── .claude-plugin/plugin.json   # 생성된 메타데이터
+├── scripts/                     # skill이 호출하는 수집 스크립트
 └── skills/
     ├── fe-task-card/            # FE 단일 업무 카드
-    └── epic-card/               # 여러 파트에 걸친 상위 업무 카드
+    ├── epic-card/               # 여러 파트에 걸친 상위 업무 카드
+    └── jupiter-engine-versions/ # jupiter 릴리즈별 엔진 버전 표
 ```
 
 ## 공통 동작
 
-두 skill 모두 같은 흐름을 따른다.
+노션 카드 skill 둘은 같은 흐름을 따른다.
 
 1. `notion-fetch`에 `self`를 넘겨 요청자 ID를 얻는다
 2. 템플릿 페이지를 fetch해 현재 섹션 구조를 읽는다
