@@ -112,6 +112,12 @@ codex plugin marketplace upgrade claude-toymarket
 - Claude 검증: `python3 scripts/verify_repo.py --profile claude --full`
 - Cursor/Codex 검증: `python3 scripts/verify_repo.py --profile dual`
 
+커밋할 때 자동으로 검증하려면 훅을 한 번 켜 둔다.
+
+```bash
+git config core.hooksPath .githooks
+```
+
 ## 면책
 
 여기 있는 모든 건 언제든 바뀌거나 사라질 수 있음.
