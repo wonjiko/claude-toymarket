@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-toymarket",
-  "description": "개인용 Claude Code 플러그인 장터",
+  "description": "개인용 Claude Code / Codex / Cursor 하이브리드 플러그인 장터",
   "owner": {
     "name": "wonjiko"
   },
