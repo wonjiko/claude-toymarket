@@ -1,0 +1,27 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Claude profile
+        run: python scripts/verify_repo.py --profile claude --full
+
+      - name: Dual profile
+        run: python scripts/verify_repo.py --profile dual
+
+      - name: Generated manifests are up to date
+        run: |
+          python scripts/verify_repo.py --profile dual --fix
+          git diff --exit-code
