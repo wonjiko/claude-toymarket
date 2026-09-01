@@ -37,6 +37,7 @@ claude-toymarket/
 │       ├── skills/                   # AI skills (*/SKILL.md, 공유)
 │       └── hooks/                    # Claude hooks.json + 공용 shell scripts
 ├── templates/                        # 새 플러그인 템플릿
+├── .githooks/                        # 저장소용 git 훅 (플러그인의 hooks/와 무관)
 ├── AGENTS.md                         # Claude/Codex/Cursor 공용 컨텍스트
 ├── CLAUDE.md                         # @AGENTS.md import
 └── PRINCIPLES.md                     # 작업 결과물 원칙
@@ -95,6 +96,12 @@ python3 scripts/verify_repo.py --profile dual
 ```
 
 Both commands should pass before changing plugin metadata or generated manifests.
+
+Enable the commit-time gate once per clone so drift is caught before it reaches a PR:
+
+```bash
+git config core.hooksPath .githooks
+```
 
 Also run the component lint before considering agent/skill work done:
 

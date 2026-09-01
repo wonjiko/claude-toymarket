@@ -1,0 +1,7 @@
+# lint-agent.sh와 lint-skill.sh는 frontmatter 구분자 '---'를 정확히 매칭한다.
+# 워크트리가 CRLF면 '---\r'이 되어 매칭이 깨지고, Windows에서 lint-all.sh가
+# frontmatter 누락으로 오탐한다. 셸 스크립트는 CRLF shebang이면 실행 자체가
+# 실패한다. 둘 다 LF로 고정한다.
+*.sh text eol=lf
+*.md text eol=lf
+.githooks/* text eol=lf
