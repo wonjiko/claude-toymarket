@@ -78,6 +78,8 @@ Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으�
 
 검사기는 파일 수정시각, 랜덤값, 네트워크, 외부 패키지를 사용하지 않는다.
 
+이 검사는 두 지점에서 자동으로 돈다. `.githooks/pre-commit`이 커밋 직전 인덱스를 검사하고, `.github/workflows/verify.yml`이 PR과 main push에서 다시 검사한다.
+
 ## Migration Gates
 
 `codex.status` 값은 마이그레이션 상태를 표시한다.
