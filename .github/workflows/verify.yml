@@ -10,7 +10,9 @@ permissions:
 
 concurrency:
   group: verify-${{ github.ref }}
-  cancel-in-progress: true
+  # PR에서는 새 push가 앞선 실행을 취소해도 무해하다. main push는 취소하지
+  # 않는다. 연달아 push하면 머지된 커밋의 검증이 끝나지 못한 채 죽는다.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   verify:
