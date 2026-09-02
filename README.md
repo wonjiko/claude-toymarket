@@ -25,6 +25,7 @@ claude-toymarket/
 │   ├── mcp-manager/                  # MCP 서버 자동 관리
 │   ├── ppt-designer/                 # HTML 프레젠테이션 생성
 │   └── configs-for-configs/          # 로컬 개발 도구 설정 재구성
+│                                     # 각 플러그인 루트의 plugin.json이 Kiro power 매니페스트
 ├── templates/                        # 새 카탈로그 항목 템플릿
 ├── AGENTS.md                         # 공용 컨텍스트 (CLAUDE.md가 import)
 └── PRINCIPLES.md                     # 작업 결과물 원칙
@@ -73,6 +74,27 @@ codex plugin marketplace upgrade claude-toymarket
 
 로컬 경로로 등록한 marketplace는 Git marketplace가 아니므로 `upgrade` 대상이 아니다. 로컬 파일을 수정한 뒤에는 아래 검증을 통과시키고 새 Codex 세션에서 다시 확인한다.
 
+## Kiro 등록
+
+Kiro는 Powers로 설치한다. 마켓플레이스 파일 하나를 등록하는 방식이 아니라 플러그인 디렉토리 하나가 power 하나다. 저장소를 한 번 등록하면 `plugins/` 아래 항목을 각각 power로 읽는다.
+
+GitHub에서 등록:
+
+1. Kiro IDE **Powers 패널 → Add Custom Power**
+2. **Import power from GitHub** 선택
+3. `https://github.com/wonjiko/claude-toymarket` 입력 후 **Install**
+
+로컬 폴더에서 등록:
+
+1. **Powers 패널 → Add Custom Power → Import power from a folder**
+2. 설치할 플러그인 디렉토리를 고른다. 예를 들어 `plugins/dice`
+
+업데이트는 **Powers 패널 → 해당 power → Check for updates**로 한다.
+
+power는 대화 중 `keywords`가 걸리면 자동으로 켜진다. 키워드는 `catalog/toymarket.json`의 플러그인별 `keywords`에 있다. dice는 `주사위`, mcp-manager는 `mcp 서버` 같은 말로 켜진다.
+
+kiro-cli에는 설치 명령이 없다. 설치는 IDE Powers 패널에서 하고, 설치한 power는 CLI에서도 그대로 쓰인다.
+
 ## 플러그인 목록
 
 | 플러그인 | 설명 | 주요 기능 |
@@ -82,7 +104,9 @@ codex plugin marketplace upgrade claude-toymarket
 | matryoshka-plugin | 플러그인/컴포넌트 생성 도구 | skill-creator, agent-creator |
 | mcp-manager | MCP 서버 자동 관리 | 세션 시작 시 MCP 상태 체크 |
 | ppt-designer | HTML 프레젠테이션 생성 | ppt-designer |
+| pick-subagent | 서브에이전트 활용 도구 모음 | /sub-opus, /sub-sonnet, /sub-haiku, subagent-loop |
 | configs-for-configs | 로컬 개발 도구 설정 재구성 | setup-claudia-statusline-with-pr-link, setup-claudia-statusline-with-notion-link |
+| meissa-fe-workflow | Meissa 프로덕트팀 업무 skill 모음 | fe-task-card, epic-card, jupiter-engine-versions |
 
 ## 사용 예시
 
@@ -101,7 +125,7 @@ codex plugin marketplace upgrade claude-toymarket
 
 1. `plugins/[name]/` 아래에 폴더 생성, 실제 컴포넌트(commands/skills/agents/hooks) 작성
 2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, keywords, claude.category, codex.category, codex.status 등)
-3. `python3 scripts/verify_repo.py --profile all --fix` 실행 — Claude/Cursor/Codex 마켓플레이스 파일과 플러그인별 매니페스트 네 개를 만든다. 이 파일들은 손으로 직접 쓰지 않는다
+3. `python3 scripts/verify_repo.py --profile all --fix` 실행 — Claude/Cursor/Codex 마켓플레이스 파일과 Kiro power 매니페스트까지 생성 파일을 만든다. 이 파일들은 손으로 직접 쓰지 않는다
 
 ## 런타임 호환성
 
