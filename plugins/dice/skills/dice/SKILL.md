@@ -10,7 +10,7 @@ Use the shared roller script for quick arbitrary choices.
 
 ## Behavior
 
-Run `../../scripts/roll.py` from this skill directory, passing the user's option text as arguments.
+Run `scripts/roll.py` from this skill directory, passing the user's option text as arguments.
 
 - No arguments: roll 1-6.
 - One positive integer `N`: roll 1-N.
@@ -24,8 +24,8 @@ Return only the script output. Do not add analysis, pros/cons, or follow-up expl
 ## Examples
 
 ```bash
-python3 ../../scripts/roll.py
-python3 ../../scripts/roll.py 20
-python3 ../../scripts/roll.py pizza chicken burger
-python3 ../../scripts/roll.py "pizza, chicken, burger"
+python3 scripts/roll.py
+python3 scripts/roll.py 20
+python3 scripts/roll.py pizza chicken burger
+python3 scripts/roll.py "pizza, chicken, burger"
 ```
