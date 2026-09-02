@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "description": "결정장애를 위한 주사위",
   "author": {
-    "name": "pulp"
+    "name": "wonjiko"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Dice",
     "shortDescription": "Randomly choose a number or option",
     "longDescription": "Choose between options or roll a bounded random number from a lightweight decision helper.",
-    "developerName": "pulp",
+    "developerName": "wonjiko",
     "category": "Productivity",
     "capabilities": [
       "Interactive"

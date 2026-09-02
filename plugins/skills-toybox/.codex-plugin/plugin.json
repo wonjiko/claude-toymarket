@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "범용 유틸리티 skill 모음",
   "author": {
-    "name": "pulp"
+    "name": "wonjiko"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Skills Toybox",
     "shortDescription": "General development workflow skills",
     "longDescription": "Reusable skills for commits, reviews, pull requests, retrospectives, and command validation.",
-    "developerName": "pulp",
+    "developerName": "wonjiko",
     "category": "Coding",
     "capabilities": [
       "Interactive",

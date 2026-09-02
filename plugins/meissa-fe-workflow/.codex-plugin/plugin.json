@@ -3,13 +3,13 @@
   "version": "0.2.0",
   "description": "Meissa 프로덕트팀 노션 업무 카드 생성과 jupiter 엔진 버전 조회 skill 모음",
   "author": {
-    "name": "pulp"
+    "name": "wonjiko"
   },
   "interface": {
     "displayName": "Meissa FE Workflow",
     "shortDescription": "Meissa task cards and jupiter engine version history",
     "longDescription": "Create FE task cards and epic cards in the Meissa ProductTeam Card Table, matching the current Notion template structure and the requester's own writing style. Also reports which carta-core and pix4d-core engine versions shipped in each jupiter release.",
-    "developerName": "pulp",
+    "developerName": "wonjiko",
     "category": "Productivity",
     "capabilities": [
       "Interactive",

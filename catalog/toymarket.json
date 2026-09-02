@@ -16,7 +16,7 @@
       "description": "결정장애를 위한 주사위",
       "version": "0.0.1",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "utility"
@@ -28,7 +28,7 @@
           "displayName": "Dice",
           "shortDescription": "Randomly choose a number or option",
           "longDescription": "Choose between options or roll a bounded random number from a lightweight decision helper.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Productivity",
           "capabilities": [
             "Interactive"
@@ -44,7 +44,7 @@
       "description": "플러그인 컴포넌트를 만드는 플러그인 - skill, agent 생성기",
       "version": "0.1.1",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "development"
@@ -56,7 +56,7 @@
           "displayName": "Matryoshka Plugin",
           "shortDescription": "Create plugin components",
           "longDescription": "Create and validate reusable agent-facing plugin components such as skills and agent prompts.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Coding",
           "capabilities": [
             "Interactive",
@@ -73,7 +73,7 @@
       "description": "범용 유틸리티 skill 모음",
       "version": "1.0.0",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "utility"
@@ -85,7 +85,7 @@
           "displayName": "Skills Toybox",
           "shortDescription": "General development workflow skills",
           "longDescription": "Reusable skills for commits, reviews, pull requests, retrospectives, and command validation.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Coding",
           "capabilities": [
             "Interactive",
@@ -102,7 +102,7 @@
       "description": "MCP 서버 자동 연결 및 헬스체크. 세션 시작 시 MCP 상태 확인 후 문제 발견 시 자동 수정 시도.",
       "version": "0.1.0",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "utility"
@@ -114,7 +114,7 @@
           "displayName": "MCP Manager",
           "shortDescription": "Check and repair MCP setup",
           "longDescription": "Inspect configured MCP servers and route repairs through shared scripts where possible.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Productivity",
           "capabilities": [
             "Interactive",
@@ -131,7 +131,7 @@
       "description": "topic-outline.md를 기반으로 HTML 프레젠테이션을 생성하는 플러그인",
       "version": "0.1.0",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "utility"
@@ -143,7 +143,7 @@
           "displayName": "PPT Designer",
           "shortDescription": "Build HTML presentations",
           "longDescription": "Generate structured HTML presentations from outlines and presentation-specific instructions.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Productivity",
           "capabilities": [
             "Interactive",
@@ -160,7 +160,7 @@
       "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드 + 서브에이전트 루프 스킬",
       "version": "0.2.0",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "utility",
@@ -173,7 +173,7 @@
           "displayName": "Pick Subagent",
           "shortDescription": "Route work to subagents",
           "longDescription": "Delegate bounded work to subagents and use a validation loop to evaluate their output.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Coding",
           "capabilities": [
             "Interactive"
@@ -189,7 +189,7 @@
       "description": "로컬 개발 도구 설정을 재현 가능한 스크립트로 재구성하는 skill 모음",
       "version": "0.4.0",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "utility"
@@ -201,7 +201,7 @@
           "displayName": "Configs for Configs",
           "shortDescription": "Reconfigure local dev tools",
           "longDescription": "Wrap or patch an already-installed local tool with a reproducible setup script, such as adding a PR link to claudia-statusline.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Productivity",
           "capabilities": [
             "Interactive",
@@ -218,7 +218,7 @@
       "description": "Meissa 프로덕트팀 노션 업무 카드 생성과 jupiter 엔진 버전 조회 skill 모음",
       "version": "0.2.0",
       "author": {
-        "name": "pulp"
+        "name": "wonjiko"
       },
       "claude": {
         "category": "productivity"
@@ -230,7 +230,7 @@
           "displayName": "Meissa FE Workflow",
           "shortDescription": "Meissa task cards and jupiter engine version history",
           "longDescription": "Create FE task cards and epic cards in the Meissa ProductTeam Card Table, matching the current Notion template structure and the requester's own writing style. Also reports which carta-core and pix4d-core engine versions shipped in each jupiter release.",
-          "developerName": "pulp",
+          "developerName": "wonjiko",
           "category": "Productivity",
           "capabilities": [
             "Interactive",
