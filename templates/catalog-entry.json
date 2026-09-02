@@ -1,0 +1,31 @@
+{
+  "name": "plugin-name",
+  "description": "한 줄 설명",
+  "version": "0.0.1",
+  "author": {
+    "name": "wonjiko"
+  },
+  "keywords": [
+    "활성화 트리거 단어",
+    "trigger keyword"
+  ],
+  "claude": {
+    "category": "utility"
+  },  "codex": {
+    "category": "Productivity",
+    "status": "ready",
+    "interface": {
+      "displayName": "Plugin Name",
+      "shortDescription": "한 줄 영문 설명",
+      "longDescription": "무엇을 해 주는지 두 문장 이내로.",
+      "developerName": "wonjiko",
+      "category": "Productivity",
+      "capabilities": [
+        "Interactive"
+      ],
+      "defaultPrompt": [
+        "이 플러그인을 부르는 말"
+      ]
+    }
+  }
+}

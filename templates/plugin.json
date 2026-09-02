@@ -1,8 +1,0 @@
-{
-  "name": "plugin-name",
-  "description": "한 줄 설명",
-  "version": "0.0.1",
-  "author": {
-    "name": "pulp"
-  }
-}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "figma": {
+      "type": "streamable-http",
+      "url": "https://mcp.figma.com/mcp"
+    },
+    "notion": {
+      "type": "streamable-http",
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "slack": {
+      "type": "streamable-http",
+      "url": "https://server.smithery.ai/slack/mcp"
+    }
+  }
+}

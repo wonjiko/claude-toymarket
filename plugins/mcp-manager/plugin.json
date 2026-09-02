@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mcp-manager",
+  "version": "0.1.0",
+  "description": "MCP 서버 자동 연결 및 헬스체크. 세션 시작 시 MCP 상태 확인 후 문제 발견 시 자동 수정 시도.",
+  "author": {
+    "name": "wonjiko"
+  },
+  "keywords": [
+    "mcp",
+    "mcp server",
+    "health check",
+    "connection",
+    "repair",
+    "mcp 서버",
+    "연결 확인"
+  ]
+}

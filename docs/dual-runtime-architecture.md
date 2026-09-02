@@ -40,7 +40,14 @@ Codex generated targets:
 - `.agents/plugins/marketplace.json`
 - `plugins/<plugin>/.codex-plugin/plugin.json`
 
-Claude target은 `--profile claude`에서 검사한다. Cursor와 Codex target은 `--profile dual`에서 검사한다.
+Kiro generated targets:
+
+- `plugins/<plugin>/plugin.json`
+- `plugins/<plugin>/mcp.json`
+
+Kiro는 별도 marketplace 파일 없이 저장소 하나에 담긴 plugin directory를 각각 power로 읽는다.
+
+Claude target은 `--profile claude`에서 검사한다. Cursor와 Codex target은 `--profile dual`, Kiro target은 `--profile kiro`에서 검사하고, `--profile all`이 네 런타임을 한 번에 검사한다.
 
 ## Shared Components
 
@@ -61,7 +68,9 @@ Claude target은 `--profile claude`에서 검사한다. Cursor와 Codex target�
 
 Codex에는 Claude의 `commands/`와 1:1로 같은 개념이 없다. 따라서 command 성격의 기능은 Codex에서는 skill, hook, MCP/app capability 중 하나로 명시적으로 재분류한다.
 
-Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으면 Cursor manifest는 빈 `hooks` 객체를 넣어 auto-discovery를 막는다. Claude `.mcp.json`은 Cursor `mcp.json`과 스키마가 달라서 Cursor manifest에 연결하지 않는다.
+Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으면 Cursor manifest는 빈 `hooks` 객체를 넣어 auto-discovery를 막는다.
+
+MCP 서버는 `catalog/toymarket.json`의 plugin별 `mcp` 블록이 원본이다. 전송 이름은 Agent Plugins 어휘인 `stdio`, `streamable-http`, `sse`를 쓴다. 여기서 런타임별 파일 두 개를 생성한다. `plugins/<plugin>/mcp.json`은 Agent Plugins 문서이고 Kiro가 읽는다. `plugins/<plugin>/.mcp.json`은 Claude 설정이고 원격 전송을 `http`로 바꿔 렌더링한다. Cursor는 Agent Plugins 규격 플러그인을 루트 경로로 직접 읽으므로 Cursor 전용 manifest에서 MCP 파일을 다시 가리키지 않는다.
 
 ## Verification Model
 
@@ -88,7 +97,7 @@ Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으�
 - `ready`: Codex에서 실제 기능 진입점이 검증됨
 - `claude-only`: 의도적으로 Claude 전용으로 유지
 
-`--profile dual`을 CI gate로 쓰려면 모든 플러그인의 `codex.status`가 `ready` 또는 `claude-only`여야 한다. `planned`가 남아 있으면 이중 런타임 완료 상태로 보지 않는다.
+CI gate는 `--profile all`이고 여기에 Codex 검사가 포함된다. 이 게이트를 통과하려면 모든 플러그인의 `codex.status`가 `ready` 또는 `claude-only`여야 한다. `planned`가 남아 있으면 이중 런타임 완료 상태로 보지 않는다.
 
 `ready`는 실제 Codex 진입점이 있을 때만 사용한다. 검증기는 `ready` plugin manifest에 `skills`, `hooks`, `mcpServers`, `apps` 중 하나가 없으면 실패시킨다.
 
@@ -101,4 +110,4 @@ Cursor hook schema는 Claude와 다르다. Claude `hooks/hooks.json`이 있으�
 1. `catalog/toymarket.json` 또는 공용 component를 수정한다.
 2. 필요한 generated file을 갱신한다.
 3. `python3 scripts/verify_repo.py --profile claude`로 Claude 구조를 검사한다.
-4. Cursor/Codex 이식 단계에서는 `python3 scripts/verify_repo.py --profile dual`을 통과시킨다.
+4. Cursor/Codex/Kiro 이식 단계에서는 `python3 scripts/verify_repo.py --profile all`을 통과시킨다.

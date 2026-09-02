@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "dice",
+  "version": "0.0.1",
+  "description": "결정장애를 위한 주사위",
+  "author": {
+    "name": "wonjiko"
+  },
+  "keywords": [
+    "dice",
+    "random",
+    "roll",
+    "decision",
+    "choose",
+    "주사위",
+    "랜덤"
+  ]
+}

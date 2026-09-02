@@ -26,7 +26,7 @@ CHECKLIST.md 기반으로 toymarket 저장소 정합성을 자동 검증한다.
 ### 3. 컴포넌트 유효성
 
 ```bash
-python3 scripts/verify_repo.py --profile dual
+python3 scripts/verify_repo.py --profile all
 ```
 
 skill, agent, command의 frontmatter를 검사한다. YAML 파싱 여부, name과 description 존재, kebab-case, 빈 command 파일이 대상이다.

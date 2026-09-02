@@ -5,3 +5,8 @@
 *.sh text eol=lf
 *.md text eol=lf
 .githooks/* text eol=lf
+
+# 생성 매니페스트는 검증기가 LF로 쓴다. 워크트리 줄끝을 고정해 Windows 클론에서
+# 드리프트 검사가 줄끝 차이로 흔들리지 않게 한다.
+*.json text eol=lf
+

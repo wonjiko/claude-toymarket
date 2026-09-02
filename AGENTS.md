@@ -29,6 +29,9 @@ claude-toymarket/
 ├── .agents/plugins/marketplace.json  # 생성된 Codex 플러그인 카탈로그
 ├── plugins/
 │   └── [plugin-name]/                # 플러그인별로 필요한 디렉토리만 포함
+│       ├── plugin.json                 # 생성된 메타데이터 (Kiro / Agent Plugins)
+│       ├── mcp.json                    # 생성된 MCP 설정 (Kiro / Agent Plugins)
+│       ├── .mcp.json                   # 생성된 MCP 설정 (Claude)
 │       ├── .claude-plugin/plugin.json  # 생성된 메타데이터 (Claude)
 │       ├── .cursor-plugin/plugin.json  # 생성된 메타데이터 (Cursor)
 │       ├── .codex-plugin/plugin.json   # 생성된 메타데이터 (Codex)
@@ -36,7 +39,7 @@ claude-toymarket/
 │       ├── agents/                   # 에이전트 정의 (*.md, Claude/Cursor)
 │       ├── skills/                   # AI skills (*/SKILL.md, 공유)
 │       └── hooks/                    # Claude hooks.json + 공용 shell scripts
-├── templates/                        # 새 플러그인 템플릿
+├── templates/                        # 새 카탈로그 항목 템플릿
 ├── .githooks/                        # 저장소용 git 훅 (플러그인의 hooks/와 무관)
 ├── AGENTS.md                         # Claude/Codex/Cursor 공용 컨텍스트
 ├── CLAUDE.md                         # @AGENTS.md import
@@ -61,8 +64,8 @@ claude-toymarket/
 ### 플러그인 생성
 
 1. `plugins/[name]/` 디렉토리 생성, 실제 컴포넌트(commands/skills/agents/hooks) 작성
-2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, claude.category, codex.category, codex.status 등)
-3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `catalog/toymarket.json`으로부터 Claude/Cursor/Codex marketplace와 plugin.json을 생성한다. 이 파일들은 손으로 직접 쓰지 않는다 (## Editing Rules 참고)
+2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가. `templates/catalog-entry.json`을 복사해 채운다
+3. `python3 scripts/verify_repo.py --profile all --fix` 실행 — `catalog/toymarket.json`으로부터 Claude/Cursor/Codex/Kiro marketplace와 plugin.json을 생성한다. 이 파일들은 손으로 직접 쓰지 않는다 (## Editing Rules 참고)
 
 ### 컴포넌트 생성 (matryoshka-plugin 사용)
 
@@ -89,13 +92,13 @@ Run the current Claude structural check:
 python3 scripts/verify_repo.py --profile claude --full
 ```
 
-Run the dual-runtime gate (Claude + Cursor + Codex):
+Run every runtime gate (Claude + Cursor + Codex + Kiro):
 
 ```bash
-python3 scripts/verify_repo.py --profile dual
+python3 scripts/verify_repo.py --profile all
 ```
 
-Both commands should pass before changing plugin metadata or generated manifests.
+Both commands should pass before changing plugin metadata or generated manifests. `--profile` picks which runtimes are checked; `--full` is a separate axis that adds the script executable-bit check.
 
 Enable the commit-time gate once per clone so drift is caught before it reaches a PR:
 
@@ -140,3 +143,5 @@ Local path marketplaces are not Git marketplaces, so `upgrade` does not apply to
 - Treat `commands/*.md` as Claude adapters. Cursor also reads `commands/` and `agents/`.
 - Treat `hooks/hooks.json` as Claude-only. Cursor manifests use empty `hooks` so that file is not auto-discovered.
 - Keep generated Claude/Cursor/Codex manifest files in sync with `scripts/verify_repo.py --fix` rather than hand-editing them.
+- Treat `plugins/[name]/plugin.json` as the Kiro / Agent Plugins manifest. Its schema is closed, so only the portable fields belong there and Kiro discovers `skills/` and `mcp.json` by their fixed locations.
+- Declare MCP servers in the catalog's per-plugin `mcp` block using the Agent Plugins transports (`stdio`, `streamable-http`, `sse`). Both `plugins/[name]/mcp.json` and `plugins/[name]/.mcp.json` are generated from it; do not hand-edit either.

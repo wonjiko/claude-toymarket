@@ -31,10 +31,10 @@ TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 git checkout-index -a -f --prefix="$TMP/"
 
-if ! "$PYTHON" "$TMP/scripts/verify_repo.py" --profile dual; then
+if ! "$PYTHON" "$TMP/scripts/verify_repo.py" --profile all; then
     echo >&2
     echo "pre-commit: 스테이징된 내용이 검증을 통과하지 못했다." >&2
     echo "pre-commit: 아래를 실행하고 갱신된 생성 파일을 함께 스테이징할 것." >&2
-    echo "  $PYTHON scripts/verify_repo.py --profile dual --fix" >&2
+    echo "  $PYTHON scripts/verify_repo.py --profile all --fix" >&2
     exit 1
 fi

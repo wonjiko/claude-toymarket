@@ -3,6 +3,9 @@
 ## 1. 마켓플레이스 정합성
 
 - [ ] `catalog/toymarket.json`의 모든 플러그인 → `plugins/[name]/.claude-plugin/plugin.json`과 `plugins/[name]/.cursor-plugin/plugin.json` 존재
+- [ ] `catalog/toymarket.json`의 모든 플러그인 → `plugins/[name]/.codex-plugin/plugin.json`과 `plugins/[name]/plugin.json` 존재
+- [ ] 모든 플러그인에 `keywords` 있음 (Kiro power 활성화 트리거)
+- [ ] `mcp` 블록이 있는 플러그인 → `plugins/[name]/mcp.json`과 `plugins/[name]/.mcp.json` 생성됨
 - [ ] `plugins/` 하위 모든 디렉토리 → `catalog/toymarket.json`에 등록됨
 - [ ] `plugins/` 하위에 빈 디렉토리(plugin.json 없는) 없음
 
@@ -16,7 +19,7 @@
 `skills/*/SKILL.md`, `agents/*.md`, `commands/*.md`의 frontmatter를 검사한다.
 
 ```bash
-python3 scripts/verify_repo.py --profile dual
+python3 scripts/verify_repo.py --profile all
 ```
 
 - [ ] 에러 없이 통과

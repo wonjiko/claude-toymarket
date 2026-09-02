@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pick-subagent",
+  "version": "0.2.0",
+  "description": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드 + 서브에이전트 루프 스킬",
+  "author": {
+    "name": "wonjiko"
+  },
+  "keywords": [
+    "subagent",
+    "delegate",
+    "model",
+    "parallel",
+    "validation loop",
+    "서브에이전트",
+    "위임"
+  ]
+}
