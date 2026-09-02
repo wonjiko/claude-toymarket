@@ -22,7 +22,7 @@ argument-hint: [max | option1 option2 ...]
 공용 스크립트를 실행한다:
 
 ```
-!`${CLAUDE_PLUGIN_ROOT}/scripts/roll.py "$ARGUMENTS"`
+!`${CLAUDE_PLUGIN_ROOT}/skills/dice/scripts/roll.py "$ARGUMENTS"`
 ```
 
 1. 인자가 없으면: 1-6 주사위

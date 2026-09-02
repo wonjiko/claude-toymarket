@@ -15,5 +15,5 @@
 ## 구성
 
 - `commands/dice.md` - `/dice` 명령어
-- `skills/dice/SKILL.md` - Codex용 skill adapter
-- `scripts/roll.py` - 공용 실행 로직
+- `skills/dice/SKILL.md` - skill adapter
+- `skills/dice/scripts/roll.py` - 공용 실행 로직. Agent Plugins 규격대로 skill 안에 둬서 Kiro power로 설치해도 함께 따라온다
