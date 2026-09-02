@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "matryoshka-plugin",
+  "version": "0.1.1",
+  "description": "플러그인 컴포넌트를 만드는 플러그인 - skill, agent 생성기",
+  "author": {
+    "name": "wonjiko"
+  },
+  "keywords": [
+    "plugin",
+    "skill",
+    "agent",
+    "generator",
+    "scaffold",
+    "lint",
+    "스킬 생성",
+    "플러그인"
+  ]
+}

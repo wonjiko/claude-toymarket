@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "meissa-fe-workflow",
+  "version": "0.2.0",
+  "description": "Meissa 프로덕트팀 노션 업무 카드 생성과 jupiter 엔진 버전 조회 skill 모음",
+  "author": {
+    "name": "wonjiko"
+  },
+  "keywords": [
+    "notion",
+    "task card",
+    "epic",
+    "meissa",
+    "jupiter",
+    "engine version",
+    "노션",
+    "업무 카드"
+  ]
+}

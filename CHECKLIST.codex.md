@@ -70,7 +70,7 @@ python3 scripts/verify_repo.py --profile claude
 ## 8. Dual Runtime Gate
 
 ```bash
-python3 scripts/verify_repo.py --profile dual
+python3 scripts/verify_repo.py --profile all
 ```
 
 - [ ] Claude 검사가 통과한다.

@@ -18,6 +18,15 @@
       "author": {
         "name": "wonjiko"
       },
+      "keywords": [
+        "dice",
+        "random",
+        "roll",
+        "decision",
+        "choose",
+        "주사위",
+        "랜덤"
+      ],
       "claude": {
         "category": "utility"
       },
@@ -46,6 +55,16 @@
       "author": {
         "name": "wonjiko"
       },
+      "keywords": [
+        "plugin",
+        "skill",
+        "agent",
+        "generator",
+        "scaffold",
+        "lint",
+        "스킬 생성",
+        "플러그인"
+      ],
       "claude": {
         "category": "development"
       },
@@ -75,6 +94,16 @@
       "author": {
         "name": "wonjiko"
       },
+      "keywords": [
+        "commit",
+        "code review",
+        "pull request",
+        "retrospective",
+        "reflection",
+        "커밋",
+        "코드 리뷰",
+        "피알"
+      ],
       "claude": {
         "category": "utility"
       },
@@ -103,6 +132,29 @@
       "version": "0.1.0",
       "author": {
         "name": "wonjiko"
+      },
+      "keywords": [
+        "mcp",
+        "mcp server",
+        "health check",
+        "connection",
+        "repair",
+        "mcp 서버",
+        "연결 확인"
+      ],
+      "mcp": {
+        "figma": {
+          "type": "streamable-http",
+          "url": "https://mcp.figma.com/mcp"
+        },
+        "notion": {
+          "type": "streamable-http",
+          "url": "https://mcp.notion.com/mcp"
+        },
+        "slack": {
+          "type": "streamable-http",
+          "url": "https://server.smithery.ai/slack/mcp"
+        }
       },
       "claude": {
         "category": "utility"
@@ -133,6 +185,15 @@
       "author": {
         "name": "wonjiko"
       },
+      "keywords": [
+        "presentation",
+        "slides",
+        "deck",
+        "html presentation",
+        "outline",
+        "발표자료",
+        "프레젠테이션"
+      ],
       "claude": {
         "category": "utility"
       },
@@ -162,6 +223,15 @@
       "author": {
         "name": "wonjiko"
       },
+      "keywords": [
+        "subagent",
+        "delegate",
+        "model",
+        "parallel",
+        "validation loop",
+        "서브에이전트",
+        "위임"
+      ],
       "claude": {
         "category": "utility",
         "marketplaceDescription": "서브에이전트 모델을 골라 실행하는 슬래시 커맨드"
@@ -191,6 +261,15 @@
       "author": {
         "name": "wonjiko"
       },
+      "keywords": [
+        "config",
+        "setup script",
+        "local tooling",
+        "statusline",
+        "dotfiles",
+        "설정",
+        "환경 구성"
+      ],
       "claude": {
         "category": "utility"
       },
@@ -220,6 +299,16 @@
       "author": {
         "name": "wonjiko"
       },
+      "keywords": [
+        "notion",
+        "task card",
+        "epic",
+        "meissa",
+        "jupiter",
+        "engine version",
+        "노션",
+        "업무 카드"
+      ],
       "claude": {
         "category": "productivity"
       },

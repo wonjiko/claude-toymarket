@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "skills-toybox",
+  "version": "1.0.0",
+  "description": "범용 유틸리티 skill 모음",
+  "author": {
+    "name": "wonjiko"
+  },
+  "keywords": [
+    "commit",
+    "code review",
+    "pull request",
+    "retrospective",
+    "reflection",
+    "커밋",
+    "코드 리뷰",
+    "피알"
+  ]
+}

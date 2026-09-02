@@ -1,6 +1,6 @@
 # claude-toymarket
 
-개인용 Claude Code / Codex / Cursor 하이브리드 플러그인 장터.
+개인용 Claude Code / Codex / Cursor / Kiro 하이브리드 플러그인 장터.
 실험적이고, 손으로 만들고, 한 사람이 관리함.
 
 ## 원칙
@@ -25,7 +25,7 @@ claude-toymarket/
 │   ├── mcp-manager/                  # MCP 서버 자동 관리
 │   ├── ppt-designer/                 # HTML 프레젠테이션 생성
 │   └── configs-for-configs/          # 로컬 개발 도구 설정 재구성
-├── templates/                        # 새 플러그인 템플릿
+├── templates/                        # 새 카탈로그 항목 템플릿
 ├── AGENTS.md                         # 공용 컨텍스트 (CLAUDE.md가 import)
 └── PRINCIPLES.md                     # 작업 결과물 원칙
 ```
@@ -100,17 +100,17 @@ codex plugin marketplace upgrade claude-toymarket
 ## 플러그인 추가하기
 
 1. `plugins/[name]/` 아래에 폴더 생성, 실제 컴포넌트(commands/skills/agents/hooks) 작성
-2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, claude.category, codex.category, codex.status 등)
-3. `python3 scripts/verify_repo.py --profile dual --fix` 실행 — `.claude-plugin/marketplace.json`, `.cursor-plugin/marketplace.json`, `plugins/[name]/.claude-plugin/plugin.json`, `plugins/[name]/.cursor-plugin/plugin.json` 등 생성 파일을 만든다. 이 파일들은 손으로 직접 쓰지 않는다
+2. `catalog/toymarket.json`의 `plugins` 배열에 항목 추가 (name, description, version, author, keywords, claude.category, codex.category, codex.status 등)
+3. `python3 scripts/verify_repo.py --profile all --fix` 실행 — Claude/Cursor/Codex 마켓플레이스 파일과 플러그인별 매니페스트 네 개를 만든다. 이 파일들은 손으로 직접 쓰지 않는다
 
-## Codex 호환성
+## 런타임 호환성
 
-이 저장소는 Claude Code, Codex, Cursor에서 쓰는 하이브리드 마켓플레이스를 목표로 한다.
+이 저장소는 Claude Code, Codex, Cursor, Kiro에서 쓰는 하이브리드 마켓플레이스를 목표로 한다.
 
 - 설계 기록: `docs/dual-runtime-architecture.md`
 - Codex 체크리스트: `CHECKLIST.codex.md`
 - Claude 검증: `python3 scripts/verify_repo.py --profile claude --full`
-- Cursor/Codex 검증: `python3 scripts/verify_repo.py --profile dual`
+- 전체 런타임 검증: `python3 scripts/verify_repo.py --profile all`
 
 커밋할 때 자동으로 검증하려면 훅을 한 번 켜 둔다.
 
