@@ -76,13 +76,28 @@ codex plugin marketplace upgrade claude-toymarket
 
 ## Kiro 등록
 
-Kiro는 Powers로 설치한다. 마켓플레이스 파일 하나를 등록하는 방식이 아니라 플러그인 디렉토리 하나가 power 하나다. 저장소를 한 번 등록하면 `plugins/` 아래 항목을 각각 power로 읽는다.
+Kiro는 Powers로 설치한다. 마켓플레이스 파일 하나를 등록하는 방식이 아니라 플러그인 디렉토리 하나가 power 하나다. 저장소를 한 번 등록해서 `plugins/` 전체를 읽히는 방식은 없고, 쓸 플러그인을 각각 등록한다.
+
+저장소 루트 URL을 넣으면 설치는 성공 표시가 뜨지만 아무것도 들어오지 않는다. Kiro는 등록된 경로에서 `plugin.json`을 찾고, 루트에는 그 파일이 없어서 구형 POWER.md 형식으로 처리하다 복사할 게 없이 끝난다.
 
 GitHub에서 등록:
 
 1. Kiro IDE **Powers 패널 → Add Custom Power**
 2. **Import power from GitHub** 선택
-3. `https://github.com/wonjiko/claude-toymarket` 입력 후 **Install**
+3. 플러그인 디렉토리까지 가리키는 URL을 넣고 **Install**
+
+```
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/dice
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/skills-toybox
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/matryoshka-plugin
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/mcp-manager
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/ppt-designer
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/pick-subagent
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/configs-for-configs
+https://github.com/wonjiko/claude-toymarket/tree/main/plugins/meissa-fe-workflow
+```
+
+power 이름은 URL 마지막 조각이 된다. `tree/<브랜치>` 부분이 있어야 뒤쪽을 하위 경로로 읽으니 빼지 않는다.
 
 로컬 폴더에서 등록:
 
